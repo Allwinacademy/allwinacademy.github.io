@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#FAF7F2">
+<title>Mapa do Clube Blindada · Luana Dias</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Lato:wght@400;700&family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+:root{--creme:#FAF7F2;--branco:#FFFFFF;--caramelo:#7E4C22;--espresso:#3E2513;--tinta:#1F1A18;--ouro:#C9A15A;--texto:#4A3F38;--suave:#EFE6DA;--verde:#2F6B4F;--vinho:#6B1E1E}
+html,body{background:var(--creme)!important;margin:0;padding:0;-webkit-text-size-adjust:100%}
+body{font-family:'Lato',sans-serif;color:var(--texto);line-height:1.65;font-size:16px}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+h1,h2,h3{font-family:'Cormorant Garamond',serif;color:var(--espresso);font-weight:600;line-height:1.15;margin:0}
+h2{font-size:34px;margin-bottom:14px}h3{font-size:23px;margin-bottom:6px}
+p{margin:0 0 14px}b,strong{color:var(--espresso)}
+.script{font-family:'Pinyon Script',cursive;color:var(--caramelo);font-weight:400}
+.kicker{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--caramelo);font-weight:700;margin-bottom:10px;display:block}
+section{padding:56px 0;border-bottom:1px solid var(--suave)}
+section.dark{background:var(--espresso);color:#E9DDCF;border:0}
+section.dark h2,section.dark h3,section.dark b{color:#FFF}
+section.dark .kicker{color:var(--ouro)}
+section.warm{background:var(--caramelo);color:#F6ECDF;border:0}
+section.warm h2,section.warm h3,section.warm b{color:#FFF}
+section.warm .kicker{color:#F3D9A8}
+.capa{padding:80px 0 64px;text-align:center}
+.capa h1{font-size:50px;letter-spacing:.04em;text-transform:uppercase}
+.capa .script{font-size:64px;display:block;margin-top:-8px}
+.capa .sub{max-width:500px;margin:18px auto 0;font-size:17px}
+.assin{margin-top:28px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--ouro)}
+.card{background:var(--branco);border-radius:18px;padding:22px;margin:16px 0;box-shadow:0 2px 18px rgba(62,37,19,.06)}
+.card.borda{border:1.5px solid var(--ouro)}
+.dark .card,.warm .card{background:rgba(255,255,255,.08);box-shadow:none}
+.lista{list-style:none;padding:0;margin:10px 0 0}
+.lista li{padding:9px 0 9px 26px;position:relative;border-bottom:1px dashed var(--suave)}
+.lista li:last-child{border:0}
+.lista li:before{content:"";position:absolute;left:4px;top:17px;width:9px;height:9px;border-radius:50%;background:var(--ouro)}
+.dark .lista li,.warm .lista li{border-color:rgba(255,255,255,.14)}
+.aviso{background:#FFF6E6;border:1px dashed var(--ouro);border-radius:12px;padding:12px 14px;font-size:14px;margin:12px 0}
+
+/* jornada */
+.jornada{display:grid;gap:12px;margin-top:18px}
+.passo{display:flex;gap:14px;background:var(--branco);border-radius:16px;padding:16px}
+.passo .num{flex:0 0 42px;height:42px;border-radius:50%;background:var(--espresso);color:#fff;font-family:'Cormorant Garamond',serif;font-size:22px;display:flex;align-items:center;justify-content:center}
+.passo h3{font-size:20px}.passo p{font-size:14.5px;margin:4px 0 0}
+.mes{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:18px;text-align:center;font-size:12px}
+.mes div{background:var(--branco);border-radius:10px;padding:10px 4px}
+.mes div.on{background:var(--espresso);color:#fff}
+.mes div.on b{color:#F3D9A8}
+.mes b{display:block;font-family:'Cormorant Garamond',serif;font-size:19px}
+.inclui{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.inclui .card{margin:0}
+.inclui .nao li:before{background:var(--vinho)}
+
+/* tabelas editáveis */
+.tabela{width:100%;border-collapse:collapse;font-size:14px}
+.tabela th{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--caramelo);text-align:left;padding:8px 6px;border-bottom:2px solid var(--suave)}
+.tabela td{padding:9px 6px;border-bottom:1px solid var(--suave);vertical-align:middle}
+.tabela td.n{text-align:right;white-space:nowrap}
+.tabela tr.destaque td{background:#FFF6E6}
+input.ed{width:64px;border:1.5px solid var(--ouro);border-radius:8px;padding:6px 6px;font-family:'Lato';font-size:15px;color:var(--espresso);background:#FFFDF8;text-align:right}
+input.ed.w{width:84px}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -6px;padding:0 6px}
+.campos{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.campo{background:var(--creme);border-radius:12px;padding:12px}
+.campo label{display:block;font-size:13px;font-weight:700;color:var(--espresso);margin-bottom:6px}
+.campo input.ed{width:100%;box-sizing:border-box;text-align:left}
+.dark .campo{background:rgba(255,255,255,.08)}.dark .campo label{color:#fff}
+.bigbox{background:var(--espresso);color:#fff;border-radius:16px;padding:20px;text-align:center;margin-top:14px}
+.bigbox .l{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ouro)}
+.bigbox .v{font-family:'Cormorant Garamond',serif;font-size:46px;line-height:1.05}
+.bigbox .s{font-size:14px;color:#E9DDCF;margin-top:6px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.kpis div{background:var(--creme);border-radius:12px;padding:12px 6px;text-align:center;font-size:12px}
+.kpis b{display:block;font-family:'Cormorant Garamond',serif;font-size:24px}
+.dark .kpis div{background:rgba(255,255,255,.08)}
+.comp{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.comp div{border-radius:14px;padding:16px;text-align:center}
+.comp .hoje{background:#F3E6E4}.comp .nova{background:#E5F0E9}
+.comp .v{font-family:'Cormorant Garamond',serif;font-size:36px;color:var(--espresso);line-height:1.1}
+.comp .t{font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:700}
+.comp .hoje .t{color:var(--vinho)}.comp .nova .t{color:var(--verde)}
+
+/* tabela de valores final */
+.menu{background:var(--branco);border-radius:20px;padding:26px 22px;border:1.5px solid var(--ouro)}
+.menu h3{text-align:center;font-size:28px}
+.menu .sub{text-align:center;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--caramelo);margin-bottom:16px}
+.item{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:10px 0;border-bottom:1px dashed var(--suave)}
+.item span.nome{font-weight:700;color:var(--espresso)}
+.item small{display:block;font-weight:400;color:var(--texto);font-size:12.5px}
+.item .p{font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--espresso);white-space:nowrap}
+.item.clube{background:#FFF6E6;border-radius:12px;padding:12px;border:0;margin-top:8px}
+
+/* crenças */
+.crenca{background:rgba(255,255,255,.08);border-radius:14px;padding:16px;margin:12px 0}
+.crenca .de{font-style:italic;color:#D9C8B4;font-size:15px}
+.crenca .para{margin-top:8px;color:#fff;font-weight:700}
+.crenca .para:before{content:"→ ";color:var(--ouro)}
+
+.virada{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.virada div{border-radius:14px;padding:16px;font-size:15px}
+.antes{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15)}
+.depois{background:rgba(201,161,90,.18);border:1px solid var(--ouro)}
+.virada .t{font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;margin-bottom:8px;display:block}
+.bio{background:var(--creme);border-left:3px solid var(--caramelo);border-radius:8px;padding:16px 18px;font-size:15px;line-height:1.7;color:var(--tinta)}
+.pilares{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.pilar{background:var(--branco);border-radius:14px;padding:18px}
+.pilar .n{font-family:'Cormorant Garamond',serif;font-size:30px;color:var(--ouro);line-height:1}
+.pilar h3{font-size:20px;margin-top:4px}.pilar p{font-size:14px;margin:6px 0 0}
+.script-box{background:var(--branco);border-radius:16px;padding:20px;margin:14px 0}
+.script-box .t{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--caramelo);font-weight:700;display:block;margin-bottom:10px}
+.script-box .msg{background:#E7F3E9;border-radius:14px 14px 14px 4px;padding:14px 16px;font-size:15px;color:var(--tinta);white-space:pre-line}
+.copiar{margin-top:10px;background:var(--espresso);color:#fff;border:0;border-radius:30px;padding:9px 18px;font-size:13px;font-family:'Lato';cursor:pointer}
+.fase{position:relative;padding:0 0 26px 34px;border-left:2px solid #F3D9A8;margin-left:8px}
+.fase:last-child{border-color:transparent}
+.fase:before{content:"";position:absolute;left:-9px;top:2px;width:16px;height:16px;border-radius:50%;background:var(--ouro);border:3px solid var(--caramelo)}
+.fase .quando{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#F3D9A8;font-weight:700}
+.fase .alvo{display:inline-block;background:var(--espresso);color:#fff;border-radius:20px;padding:4px 12px;font-size:13px;margin-top:4px}
+.check{list-style:none;padding:0;margin:0}
+.check li{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.15);cursor:pointer}
+.check .box{flex:0 0 22px;height:22px;border:2px solid #F3D9A8;border-radius:6px;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--caramelo)}
+.check li.ok .box{background:#F3D9A8}.check li.ok .txt{opacity:.6;text-decoration:line-through}
+.fim{text-align:center;padding:70px 0 90px}
+.fim .script{font-size:52px;display:block;margin-bottom:8px}
+@media(max-width:600px){
+  h2{font-size:29px}.capa h1{font-size:36px}.capa .script{font-size:50px}
+  .inclui,.virada,.pilares,.campos{grid-template-columns:1fr}
+  .tabela{font-size:13px}.mes{font-size:10.5px}
+}
+</style>
+</head>
+<body>
+
+<header class="capa">
+  <div class="wrap">
+    <span class="kicker">Luana Dias · Mapa da retomada</span>
+    <h1>Clube Blindada</h1>
+    <span class="script">o mês inteiro</span>
+    <p class="sub">O caminho até <b>R$ 10.000 por mês</b> com agenda em paz, valores justos e tempo de volta pra quem você mais ama.</p>
+    <div class="assin">All Win Academy · Maria Clara</div>
+  </div>
+</header>
+
+<!-- CARTA -->
+<section>
+  <div class="wrap">
+    <span class="kicker">Antes dos números</span>
+    <h2>Luana, isso aqui começa pelo seu coração</h2>
+    <p>Você atende com devoção. Cada cliente sai da sua cadeira cuidada, ouvida, bonita. Esse é um dom lindo e é por ele que tanta gente volta.</p>
+    <p>Só que tem uma pessoa que está ficando de fora desse cuidado: <b>você</b>. E junto com você, as pessoas que você mais ama, esperando o horário que nunca sobra.</p>
+    <p>Esse mapa foi feito pra te mostrar, com números reais e com calma, que dá pra servir com o mesmo amor, ganhando o que o seu trabalho vale e trabalhando menos horas. Cobrar o valor certo é o que te sustenta de pé pra continuar servindo por muitos anos.</p>
+    <div class="card borda">
+      <h3>Como usar esse mapa hoje</h3>
+      <p style="margin:0">Os campos com <b>borda dourada</b> são editáveis. Os números que estão lá são uma referência inicial. Preencham juntas, com os tempos e valores reais da Luana, e todo o resto do mapa se recalcula sozinho.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DINÂMICA -->
+<section>
+  <div class="wrap">
+    <span class="kicker">A dinâmica do clube</span>
+    <h2>Como funciona na prática</h2>
+    <p>O Clube Blindada é uma assinatura mensal. A cliente paga um valor fixo todo mês e em troca tem as mãos e os pés cuidados o mês inteiro, com horário garantido na sua agenda.</p>
+    <div class="jornada">
+      <div class="passo"><div class="num">1</div><div><h3>A entrada</h3><p>Se a cliente ainda não tem alongamento, faz a <b>aplicação</b> primeiro, paga à parte pelo valor avulso. Se ela já é sua cliente de manutenção, entra direto no clube.</p></div></div>
+      <div class="passo"><div class="num">2</div><div><h3>A adesão</h3><p>Ela escolhe <b>um dia fixo do mês</b> (ex: toda 2ª terça, às 9h) e cadastra o pagamento recorrente. Fica combinado a permanência mínima de 3 meses.</p></div></div>
+      <div class="passo"><div class="num">3</div><div><h3>A visita do mês</h3><p>Uma ida só, com <b>manutenção do alongamento + pé blindado em gel</b> no mesmo atendimento. Ela sai com tudo pronto pra 30 dias.</p></div></div>
+      <div class="passo"><div class="num">4</div><div><h3>O cuidado entre visitas</h3><p>Quebrou uma unha em até 7 dias? <b>Reparo incluso</b>. Depois disso, o reparo é cobrado à parte com valor de assinante.</p></div></div>
+      <div class="passo"><div class="num">5</div><div><h3>A renovação</h3><p>O pagamento cai sozinho todo mês na mesma data. Você não precisa vender de novo, só encantar.</p></div></div>
+    </div>
+
+    <h3 style="margin-top:30px">O mês de uma assinante</h3>
+    <div class="mes">
+      <div class="on"><b>Dia 1</b>visita do mês</div>
+      <div><b>Dia 7</b>fim do reparo grátis</div>
+      <div><b>Dia 15</b>stories dela linda</div>
+      <div><b>Dia 25</b>lembrete da visita</div>
+      <div class="on"><b>Dia 30</b>nova visita</div>
+    </div>
+
+    <div class="inclui">
+      <div class="card">
+        <h3>Está incluso</h3>
+        <ul class="lista">
+          <li>1 manutenção do alongamento por mês</li>
+          <li>1 pé blindado em gel por mês</li>
+          <li>Esmaltação em gel lisa ou francesinha simples nas mãos, feita junto da manutenção</li>
+          <li>Reparo de quebra em até 7 dias</li>
+          <li>Horário fixo e prioridade em datas cheias</li>
+          <li>Mimo no mês do aniversário</li>
+        </ul>
+      </div>
+      <div class="card nao">
+        <h3>Fica por fora</h3>
+        <ul class="lista">
+          <li>Aplicação nova de alongamento</li>
+          <li>Nail art elaborada, pedrarias, encapsulada</li>
+          <li>Troca de formato ou tamanho</li>
+          <li>Reparo depois de 7 dias</li>
+          <li>Remoção completa</li>
+          <li>Esmaltação em gel avulsa nas mãos, sem alongamento</li>
+          <li>Falta sem aviso (conta como visita feita)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="aviso" style="margin-top:16px"><b>Ressalva importante:</b> a esmaltação em gel das mãos é feita somente junto de uma <b>aplicação</b> ou de uma <b>manutenção</b> de alongamento. Ela não é oferecida como serviço avulso.</div>
+  </div>
+</section>
+
+<!-- LABORATÓRIO DO TEMPO -->
+<section>
+  <div class="wrap">
+    <span class="kicker">Laboratório do tempo</span>
+    <h2>Quanto você ganha por hora hoje</h2>
+    <p>Aqui a gente coloca na mesa o tempo real de cada serviço, o valor que você cobra hoje e o custo de material. O que aparece no fim da linha é <b>quanto sobra pra você a cada hora sentada na cadeira</b>.</p>
+    <div class="aviso">Tempos contados do momento que a cliente senta até ela levantar, incluindo higienização e secagem.</div>
+    <div class="scroll">
+    <table class="tabela" id="tabServ">
+      <thead><tr><th>Serviço</th><th>Tempo (min)</th><th>Cobra hoje</th><th>Material</th><th>Sobra por hora</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    </div>
+    <div class="campos" style="margin-top:18px">
+      <div class="campo"><label>Taxa da maquininha / Pix automático (%)</label><input class="ed" id="taxa" type="number" inputmode="decimal" value="4"></div>
+      <div class="campo"><label>Horas que você trabalha hoje por semana</label><input class="ed" id="hHoje" type="number" inputmode="numeric" value="50"></div>
+      <div class="campo"><label>Quanto você fatura hoje por mês (R$)</label><input class="ed" id="fatHoje" type="number" inputmode="numeric" value="5000"></div>
+      <div class="campo"><label>Dias que você trabalha hoje por semana</label><input class="ed" id="dHoje" type="number" inputmode="numeric" value="6"></div>
+    </div>
+    <div class="bigbox">
+      <div class="l">Sua hora hoje vale em média</div>
+      <div class="v" id="horaHoje">R$ 0</div>
+      <div class="s" id="horaHojeTxt"></div>
+    </div>
+  </div>
+</section>
+
+<!-- VALOR DA HORA -->
+<section class="dark">
+  <div class="wrap">
+    <span class="kicker">O valor da sua hora</span>
+    <h2>Quanto sua hora precisa valer</h2>
+    <p>Agora a gente inverte a conta. Primeiro você escolhe <b>quanto quer ganhar</b> e <b>quantas horas quer trabalhar</b>, deixando espaço pra sua família. Depois descobrimos o valor mínimo da sua hora.</p>
+    <div class="campos">
+      <div class="campo"><label>Meta de faturamento por mês (R$)</label><input class="ed" id="meta" type="number" inputmode="numeric" value="10000"></div>
+      <div class="campo"><label>Horas de atendimento que você quer por semana</label><input class="ed" id="hNova" type="number" inputmode="numeric" value="32"></div>
+    </div>
+    <div class="bigbox" style="background:rgba(255,255,255,.08)">
+      <div class="l">Sua hora precisa valer no mínimo</div>
+      <div class="v" id="horaAlvo">R$ 0</div>
+      <div class="s" id="horaAlvoTxt"></div>
+    </div>
+    <div class="comp">
+      <div class="hoje"><div class="t">Hora hoje</div><div class="v" id="cHoje">R$ 0</div></div>
+      <div class="nova"><div class="t">Hora nova</div><div class="v" id="cNova">R$ 0</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TABELA DE VALORES -->
+<section>
+  <div class="wrap">
+    <span class="kicker">Tabela de valores</span>
+    <h2>A nova tabela da Luana</h2>
+    <p>Cada preço abaixo nasce da mesma fórmula: <b>tempo do serviço × valor da sua hora + material + taxa</b>, arredondado. Assim nenhum valor sai do achismo. Os avulsos ficam acima do clube de propósito, pra assinatura ser a escolha natural.</p>
+    <div class="menu" id="menu">
+      <h3>Luana Dias</h3>
+      <div class="sub">Nail Designer · Tabela de valores</div>
+      <div id="menuItens"></div>
+      <p style="font-size:12.5px;margin:10px 0 0;font-style:italic">Esmaltação em gel nas mãos somente junto da aplicação ou da manutenção do alongamento.</p>
+      <div class="item clube"><span class="nome">Clube Blindada · Fundadora<small>Manutenção + pé blindado todo mês · só 20 vagas</small></span><span class="p" id="mFund">R$ 220</span></div>
+      <div class="item clube"><span class="nome">Clube Blindada<small>Manutenção + pé blindado todo mês</small></span><span class="p" id="mClube">R$ 250</span></div>
+    </div>
+    <div class="campos" style="margin-top:18px">
+      <div class="campo"><label>Preço Fundadora (R$)</label><input class="ed" id="pFund" type="number" inputmode="numeric" value="220"></div>
+      <div class="campo"><label>Preço Clube (R$)</label><input class="ed" id="pClube" type="number" inputmode="numeric" value="250"></div>
+    </div>
+    <div class="card borda" id="economia"></div>
+  </div>
+</section>
+
+<!-- CLUBE NA PONTA DO LÁPIS -->
+<section>
+  <div class="wrap">
+    <span class="kicker">O clube na ponta do lápis</span>
+    <h2>A conta dos R$ 10.000</h2>
+    <div class="campos">
+      <div class="campo"><label>Fundadoras</label><input class="ed" id="qFund" type="number" inputmode="numeric" value="20"></div>
+      <div class="campo"><label>Clientes do clube</label><input class="ed" id="qClube" type="number" inputmode="numeric" value="23"></div>
+      <div class="campo"><label>Extras no mês (aplicações, nail art, reparos) R$</label><input class="ed" id="extras" type="number" inputmode="numeric" value="0"></div>
+      <div class="campo"><label>Dias de atendimento por semana</label><input class="ed" id="dNova" type="number" inputmode="numeric" value="4"></div>
+    </div>
+    <div class="bigbox">
+      <div class="l">Faturamento do mês</div>
+      <div class="v" id="fatClube">R$ 0</div>
+      <div class="s" id="fatClubeTxt"></div>
+    </div>
+    <div class="kpis">
+      <div><b id="kAssin">0</b>assinantes</div>
+      <div><b id="kHorasSem">0h</b>por semana</div>
+      <div><b id="kPorDia">0</b>clientes por dia</div>
+    </div>
+    <div class="kpis">
+      <div><b id="kLiquido">R$ 0</b>sobra depois de material e taxa</div>
+      <div><b id="kHoraClube">R$ 0</b>sua hora no clube</div>
+      <div><b id="kVisita">0h</b>por visita</div>
+    </div>
+    <div class="card borda" id="leitura"></div>
+  </div>
+</section>
+
+<!-- TEMPO COM QUEM AMA -->
+<section class="warm">
+  <div class="wrap">
+    <span class="kicker">O que volta pra você</span>
+    <h2>Tempo com quem você ama</h2>
+    <div class="comp">
+      <div class="hoje" style="background:rgba(255,255,255,.12)"><div class="t" style="color:#F3D9A8">Hoje</div><div class="v" style="color:#fff" id="tHoje">0h</div><div style="font-size:13px">por semana na cadeira</div></div>
+      <div class="nova" style="background:rgba(255,255,255,.22)"><div class="t" style="color:#fff">Com o clube</div><div class="v" style="color:#fff" id="tNova">0h</div><div style="font-size:13px">por semana na cadeira</div></div>
+    </div>
+    <div class="bigbox" style="background:var(--espresso)">
+      <div class="l">Horas devolvidas pra sua vida</div>
+      <div class="v" id="tLivre">0h</div>
+      <div class="s" id="tLivreTxt"></div>
+    </div>
+    <p style="margin-top:20px">Essas horas têm nome e rosto. É o almoço sem pressa, a tarde livre, estar presente de verdade em quem espera por você em casa. Elas também fazem parte do seu faturamento.</p>
+  </div>
+</section>
+
+<!-- CRENÇAS -->
+<section class="dark">
+  <div class="wrap">
+    <span class="kicker">Ressignificando</span>
+    <h2>O que você diz pra você</h2>
+    <p>Pra cobrar o valor novo com firmeza, a mente precisa acompanhar. Lê cada frase em voz alta e sente qual delas ainda aperta.</p>
+    <div class="crenca"><div class="de">"Se eu cobrar mais, vou perder minhas clientes."</div><div class="para">As clientes que valorizam o meu cuidado ficam, e recebem uma Luana descansada e inteira.</div></div>
+    <div class="crenca"><div class="de">"Quem ama servir cobra pouco."</div><div class="para">Eu sirvo com amor e me sustento com dignidade. As duas coisas cabem em mim.</div></div>
+    <div class="crenca"><div class="de">"Vou ficar em desvantagem com a concorrência."</div><div class="para">Meu pé dura 30 dias. Eu entrego algo que quase ninguém entrega, e isso tem preço próprio.</div></div>
+    <div class="crenca"><div class="de">"Minha família entende que eu preciso trabalhar."</div><div class="para">Minha família merece a minha melhor versão, e ela aparece quando eu tenho tempo pra elas.</div></div>
+    <div class="crenca"><div class="de">"Quem sou eu pra cobrar isso?"</div><div class="para">Sou a mulher que abriu uma formação e lotou lista de espera no primeiro dia. Eu sei o que faço.</div></div>
+  </div>
+</section>
+
+<!-- POSICIONAMENTO -->
+<section>
+  <div class="wrap">
+    <span class="kicker">Posicionamento</span>
+    <h2>A especialista em unhas que duram</h2>
+    <p>O Instagram precisa dizer em três segundos o que ninguém mais na sua cidade diz: <b>com você, a unha fica bonita o mês inteiro</b>. Mãos alongadas e pés blindados, sem lascar, sem correria.</p>
+    <div class="virada" style="color:var(--texto)">
+      <div style="background:#F3E6E4"><span class="t" style="color:var(--vinho)">Como estava</span>Nail designer que faz de tudo, posts de trabalho feito e "agenda aberta".</div>
+      <div style="background:#E5F0E9"><span class="t" style="color:var(--verde)">Para onde vamos</span>Especialista em <b>blindagem das mãos aos pés</b>, com prova de durabilidade e clube com vagas.</div>
+    </div>
+    <h3 style="margin-top:28px">Proposta de bio</h3>
+    <div class="bio">Luana Dias · Nail Designer em Uberaba<br>Especialista em unhas blindadas das mãos aos pés 💅<br>Pé em gel que dura 30 dias ✨<br>Clube Blindada: suas unhas lindas o mês inteiro<br>👇 Garanta sua vaga</div>
+    <p style="font-size:14px;margin-top:10px">O link da bio leva direto pro WhatsApp com a mensagem "Quero minha vaga no Clube Blindada".</p>
+    <h3 style="margin-top:24px">Destaques</h3>
+    <ul class="lista">
+      <li><b>Clube</b>: como funciona, o que inclui, valores</li>
+      <li><b>Dia 30</b>: fotos de pés com 30 dias de uso</li>
+      <li><b>Clientes</b>: prints e vídeos de quem já está no clube</li>
+      <li><b>Formação</b>: pra quem quer aprender com você</li>
+    </ul>
+    <h3 style="margin-top:24px">Quatro pilares de conteúdo</h3>
+    <div class="pilares">
+      <div class="pilar"><div class="n">01</div><h3>Prova</h3><p>Série <b>"Dia 1, Dia 30"</b>: a mesma cliente no dia do atendimento e um mês depois.</p></div>
+      <div class="pilar"><div class="n">02</div><h3>Ensino</h3><p>Por que o gel no pé dura mais, como cuidar, o que faz a unha lascar.</p></div>
+      <div class="pilar"><div class="n">03</div><h3>Bastidor</h3><p>Material, higiene, o ritual do seu atendimento. Confiança nasce do processo.</p></div>
+      <div class="pilar"><div class="n">04</div><h3>Pertencimento</h3><p>As clientes do clube, a alegria delas, o mimo de aniversário.</p></div>
+    </div>
+    <div class="card"><b>Ritmo possível:</b> 3 posts por semana e stories em todo dia de atendimento. Constância leve.</div>
+  </div>
+</section>
+
+<!-- ABORDAGEM -->
+<section>
+  <div class="wrap">
+    <span class="kicker">Nova abordagem</span>
+    <h2>Você oferece vaga, ela escolhe entrar</h2>
+    <div class="script-box">
+      <span class="t">1 · Convite pras clientes atuais</span>
+      <div class="msg" id="m1">Oi, [nome]! Tudo bem? 💛
+Tô criando algo especial e quis te contar primeiro, porque você é das minhas clientes mais queridas.
+
+É o Clube Blindada: todo mês você tem a manutenção das mãos + o pé blindado em gel, que dura uns 30 dias sem lascar. Com horário fixo seu, reparo de quebra incluso e prioridade nas datas cheias.
+
+As 20 primeiras entram como fundadoras por R$ <span class="vFund">220</span> por mês, com esse valor travado. Depois vai pra R$ <span class="vClube">250</span>.
+
+Quer que eu reserve uma das vagas pra você?</div>
+      <button class="copiar" onclick="copiar('m1',this)">Copiar mensagem</button>
+    </div>
+    <div class="script-box">
+      <span class="t">2 · Aviso de nova tabela pra quem não entrar no clube</span>
+      <div class="msg" id="m3">Oi, [nome]! 💛
+Passando pra te avisar com carinho que a partir de [data] minha tabela de valores muda. Investi em técnica e material pra entregar unhas que duram de verdade, e os valores acompanham esse cuidado.
+
+Se fizer sentido pra você, o Clube Blindada sai mais em conta do que os avulsos e ainda garante seu horário fixo. Posso te explicar?</div>
+      <button class="copiar" onclick="copiar('m3',this)">Copiar mensagem</button>
+    </div>
+    <div class="script-box">
+      <span class="t">3 · Quando ela diz "vou pensar" ou "tá caro"</span>
+      <div class="msg" id="m2">Claro, pensa com calma 💛
+Só pra te ajudar na conta: mãos e pés avulsos saem mais caro que o clube, e o pé comum dura uma semana. No clube você passa o mês inteiro com tudo lindo e ainda tem o horário garantido.
+
+Consigo segurar sua vaga de fundadora até [dia]. Depois ela volta pra fila.</div>
+      <button class="copiar" onclick="copiar('m2',this)">Copiar mensagem</button>
+    </div>
+    <div class="script-box">
+      <span class="t">4 · Stories de abertura (5 dias)</span>
+      <ul class="lista" style="margin:0">
+        <li><b>Dia 1</b> · Foto "Dia 1, Dia 30" de um pé. "30 dias depois. Sem retoque." Enquete.</li>
+        <li><b>Dia 2</b> · Ensino: por que o pé blindado dura mais. Caixinha de perguntas.</li>
+        <li><b>Dia 3</b> · "Estou abrindo 20 vagas de fundadora." Mostra o que inclui.</li>
+        <li><b>Dia 4</b> · Prints das primeiras clientes entrando. Contador de vagas.</li>
+        <li><b>Dia 5</b> · Últimas vagas de fundadora. Link direto pro WhatsApp.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 90 DIAS -->
+<section class="warm">
+  <div class="wrap">
+    <span class="kicker">Plano de 90 dias</span>
+    <h2>Passo a passo até a meta</h2>
+    <div style="margin-top:20px">
+      <div class="fase"><div class="quando">Semanas 1 e 2</div><h3>Preparar a casa</h3><p>Cronometrar os serviços, fechar a tabela nova, ajustar bio e destaques, fotografar 5 pés no dia 1, configurar a cobrança recorrente e desenhar os horários fixos do clube na agenda.</p><span class="alvo">Tudo pronto pra abrir</span></div>
+      <div class="fase"><div class="quando">Mês 1</div><h3>Abrir as fundadoras</h3><p>Convite individual pras clientes atuais, aviso da tabela nova pras demais e 5 dias de stories. Foco total nas 20 vagas.</p><span class="alvo" id="a1">20 fundadoras</span></div>
+      <div class="fase"><div class="quando">Mês 2</div><h3>Clube no valor oficial</h3><p>Série "Dia 1, Dia 30" rodando, indicação premiada e abertura do clube no valor cheio.</p><span class="alvo" id="a2">32 assinantes</span></div>
+      <div class="fase"><div class="quando">Mês 3</div><h3>Meta batida</h3><p>Agenda redonda, lista de espera e espaço pra próxima turma da formação.</p><span class="alvo" id="a3">43 assinantes</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CHECKLIST -->
+<section class="dark">
+  <div class="wrap">
+    <span class="kicker">Movimentos desta semana</span>
+    <h2>Seus primeiros passos</h2>
+    <p style="font-size:14px">Toca em cada item quando concluir.</p>
+    <ul class="check" id="check">
+      <li><div class="box"></div><span class="txt">Cronometrar manutenção, pé blindado e aplicação em 3 clientes diferentes</span></li>
+      <li><div class="box"></div><span class="txt">Fechar a tabela de valores nova com a Maria Clara</span></li>
+      <li><div class="box"></div><span class="txt">Trocar a bio pra especialista em unhas blindadas</span></li>
+      <li><div class="box"></div><span class="txt">Criar os destaques Clube, Dia 30, Clientes e Formação</span></li>
+      <li><div class="box"></div><span class="txt">Listar as clientes que fazem mãos e pés com você</span></li>
+      <li><div class="box"></div><span class="txt">Configurar a cobrança recorrente</span></li>
+      <li><div class="box"></div><span class="txt">Bloquear na agenda um horário fixo só da família</span></li>
+      <li><div class="box"></div><span class="txt">Enviar o convite de fundadora pras 10 clientes mais fiéis</span></li>
+    </ul>
+  </div>
+</section>
+
+<footer class="fim">
+  <div class="wrap">
+    <span class="script">Luana,</span>
+    <p style="max-width:520px;margin:0 auto 16px">o mesmo amor que você coloca em cada unha merece voltar pra sua casa, pra sua mesa e pras pessoas que te esperam. Cobrar o valor certo é um ato de cuidado com você e com elas.</p>
+    <p style="max-width:520px;margin:0 auto"><b>Um passo por vez, com firmeza e com carinho. Eu sigo com você.</b></p>
+    <div class="assin">Maria Clara · All Win Academy</div>
+  </div>
+</footer>
+
+<script>
+const SERV=[
+ {id:'apl',nome:'Aplicação de alongamento',min:150,preco:150,mat:25,desc:'Primeira colocação'},
+ {id:'man',nome:'Manutenção do alongamento',min:120,preco:110,mat:18,desc:'A cada 21 a 30 dias'},
+ {id:'pe',nome:'Pé blindado em gel',min:75,preco:80,mat:15,desc:'Dura em torno de 30 dias'},
+ {id:'rem',nome:'Remoção completa',min:40,preco:40,mat:5,desc:'Com hidratação'},
+ {id:'rep',nome:'Reparo de unha',min:20,preco:15,mat:3,desc:'Por unha'}
+];
+const $=id=>document.getElementById(id);
+const v=id=>parseFloat($(id).value)||0;
+const R=n=>'R$ '+Math.round(n).toLocaleString('pt-BR');
+const H=n=>{let t=Math.round(n*60),h=Math.floor(t/60),m=t%60;return h+'h'+(m?String(m).padStart(2,'0'):'')};
+const arred=n=>Math.ceil(n/5)*5;
+
+const tb=document.querySelector('#tabServ tbody');
+SERV.forEach(s=>{
+  const tr=document.createElement('tr'); if(s.id==='man'||s.id==='pe') tr.className='destaque';
+  tr.innerHTML=`<td><b>${s.nome}</b></td>
+  <td><input class="ed" type="number" inputmode="numeric" id="min_${s.id}" value="${s.min}"></td>
+  <td><input class="ed" type="number" inputmode="numeric" id="pr_${s.id}" value="${s.preco}"></td>
+  <td><input class="ed" type="number" inputmode="numeric" id="mat_${s.id}" value="${s.mat}"></td>
+  <td class="n" id="hr_${s.id}"></td>`;
+  tb.appendChild(tr);
+});
+
+function calc(){
+  const taxa=v('taxa')/100;
+  // laboratório
+  SERV.forEach(s=>{
+    const m=v('min_'+s.id)/60||1, liq=v('pr_'+s.id)*(1-taxa)-v('mat_'+s.id);
+    $('hr_'+s.id).innerHTML='<b>'+R(liq/m)+'</b>';
+  });
+  const hHoje=v('hHoje'), fatHoje=v('fatHoje');
+  const horaHoje= hHoje? fatHoje/(hHoje*4.3):0;
+  $('horaHoje').textContent=R(horaHoje);
+  $('horaHojeTxt').textContent=`${R(fatHoje)} divididos por ${Math.round(hHoje*4.3)} horas de trabalho no mês, sem descontar material.`;
+
+  // hora alvo
+  const meta=v('meta'), hNova=v('hNova');
+  const horaAlvo= hNova? meta/(hNova*4.3):0;
+  $('horaAlvo').textContent=R(horaAlvo);
+  $('horaAlvoTxt').textContent=`${R(meta)} divididos por ${Math.round(hNova*4.3)} horas de atendimento no mês.`;
+  $('cHoje').textContent=R(horaHoje); $('cNova').textContent=R(horaAlvo);
+
+  // tabela de valores
+  let html='';
+  const sug={};
+  SERV.forEach(s=>{
+    const h=v('min_'+s.id)/60;
+    const p=arred((h*horaAlvo+v('mat_'+s.id))/(1-taxa));
+    sug[s.id]=p;
+    html+=`<div class="item"><span class="nome">${s.nome}<small>${s.desc} · ${v('min_'+s.id)} min</small></span><span class="p">${R(p)}</span></div>`;
+  });
+  $('menuItens').innerHTML=html;
+  const pF=v('pFund'), pC=v('pClube');
+  $('mFund').textContent=R(pF); $('mClube').textContent=R(pC);
+  document.querySelectorAll('.vFund').forEach(e=>e.textContent=Math.round(pF));
+  document.querySelectorAll('.vClube').forEach(e=>e.textContent=Math.round(pC));
+  const somaAv=sug.man+sug.pe;
+  const visitaMin=v('min_man')+v('min_pe'), visitaH=visitaMin/60;
+  const matVisita=v('mat_man')+v('mat_pe');
+  const clubeJusto=arred((visitaH*horaAlvo+matVisita)/(1-taxa));
+  $('economia').innerHTML = `<h3>Avulso x Clube</h3>
+   <p>Manutenção + pé avulsos na tabela nova: <b>${R(somaAv)}</b>. No clube: <b>${R(pC)}</b>. A assinante economiza <b>${R(somaAv-pC)}</b> por mês e ainda ganha horário fixo e reparo.</p>
+   <p style="margin:0">Pelo tempo real da visita (${H(visitaH)}), o valor justo do clube seria em torno de <b>${R(clubeJusto)}</b>. ${pC>=clubeJusto?'O preço do clube está saudável. ✨':'O clube está um pouco abaixo do valor justo. Funciona como porta de entrada, com reajuste planejado depois de 6 meses, ou com a visita ficando mais rápida.'}</p>`;
+
+  // clube na ponta do lápis
+  const qF=v('qFund'), qC=v('qClube'), ex=v('extras'), dN=v('dNova')||1;
+  const assin=qF+qC;
+  const fat=qF*pF+qC*pC+ex;
+  const liquido=fat*(1-taxa)-assin*matVisita;
+  const horasMes=assin*visitaH, horasSem=horasMes/4.3;
+  const horaClube= horasMes? (qF*pF+qC*pC)*(1-taxa)/horasMes - matVisita/visitaH : 0;
+  $('fatClube').textContent=R(fat);
+  $('fatClubeTxt').textContent= fat>=meta ? 'Meta alcançada ✨' : 'Faltam '+R(meta-fat)+' pra meta';
+  $('kAssin').textContent=assin;
+  $('kHorasSem').textContent=H(horasSem);
+  $('kPorDia').textContent=(Math.round(assin/4.3/dN*10)/10).toLocaleString('pt-BR');
+  $('kLiquido').textContent=R(liquido);
+  $('kHoraClube').textContent=R(horaClube);
+  $('kVisita').textContent=H(visitaH);
+  $('leitura').innerHTML=`<h3>Leitura do mapa</h3>
+   <p>Com <b>${assin} assinantes</b>, cada uma vindo uma vez por mês por ${H(visitaH)}, você atende cerca de <b>${Math.round(assin/4.3)} clientes por semana</b> em ${dN} dias, umas ${H(horasSem/dN)} por dia.</p>
+   <p style="margin:0">${horasSem<=hNova?'Isso cabe dentro das horas que você escolheu trabalhar. 💛':'Isso passa um pouco das horas que você escolheu. Os caminhos são: ganhar agilidade na visita, ajustar o preço do clube ou completar a meta com a formação.'}</p>`;
+
+  // tempo
+  $('tHoje').textContent=H(hHoje); $('tNova').textContent=H(horasSem);
+  const livre=Math.max(0,(hHoje-horasSem)*4.3);
+  $('tLivre').textContent=H(livre)+' por mês';
+  $('tLivreTxt').textContent=`Isso dá mais ou menos ${Math.round(livre/8)} dias inteiros por mês pra viver.`;
+
+  // 90 dias
+  $('a1').textContent=`${qF} fundadoras · ${R(qF*pF)} recorrentes`;
+  const m2=qF+Math.round(qC/2);
+  $('a2').textContent=`${m2} assinantes · ${R(qF*pF+Math.round(qC/2)*pC)}`;
+  $('a3').textContent=`${assin} assinantes · ${R(fat)} por mês`;
+}
+document.querySelectorAll('input.ed').forEach(i=>i.addEventListener('input',calc));
+calc();
+
+document.querySelectorAll('#check li').forEach(li=>li.addEventListener('click',()=>{li.classList.toggle('ok');li.querySelector('.box').textContent=li.classList.contains('ok')?'✓':''}));
+function copiar(id,btn){
+  const t=$(id).innerText;
+  const done=()=>{btn.textContent='Copiado ✓';setTimeout(()=>btn.textContent='Copiar mensagem',1800)};
+  if(navigator.clipboard){navigator.clipboard.writeText(t).then(done).catch(()=>fb(t,done))}else fb(t,done);
+}
+function fb(t,done){const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy')}catch(e){}a.remove();done()}
+</script>
+</body>
+</html>
