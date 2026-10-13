@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0f0c0a">
+<title>Luana Dias · Clube Blindada</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--cream:#f3ece3;--bl:#c88a4a;--bl2:#e0a96d;--black:#0f0c0a;--mid:#1b1511;--card:#231b16;--muted:#b9a896;--line:rgba(200,138,74,.2)}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--cream);font-family:'Lato',sans-serif;font-weight:300;-webkit-text-size-adjust:100%;padding-bottom:90px}
+section{padding:56px 20px;scroll-margin-top:58px}
+.wrap{max-width:480px;margin:0 auto}
+.eyebrow{font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:var(--bl);margin-bottom:10px;font-weight:400}
+h1,h2{font-family:'Cormorant Garamond',serif;font-weight:400;line-height:1.05}
+h2{font-size:40px;margin-bottom:8px}
+em{font-style:italic;color:var(--bl)}
+.sub{color:var(--muted);font-size:14px;line-height:1.7;margin-bottom:24px}
+.alt{background:var(--mid)}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+.reveal.on{opacity:1;transform:none}
+
+/* capa */
+.cover{min-height:92vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden}
+.cover::before{content:'';position:absolute;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(200,138,74,.16),transparent 68%);top:50%;left:50%;transform:translate(-50%,-50%);animation:breathe 6s ease-in-out infinite}
+@keyframes breathe{50%{transform:translate(-50%,-50%) scale(1.12)}}
+.cover .wrap{position:relative;z-index:1}
+.cover h1{font-size:62px;font-weight:300;margin:8px 0 4px;animation:up 1s ease both .2s}
+.cover .eyebrow{animation:up 1s ease both}
+.cover .line{width:0;height:1px;background:var(--bl);margin:22px auto;animation:grow 1.2s ease forwards .7s}
+@keyframes grow{to{width:56px}}
+@keyframes up{from{opacity:0;transform:translateY(18px)}}
+.cover .sig{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:28px;animation:up 1s ease both .5s}
+.cover .tag{font-size:11px;letter-spacing:.35em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+.cover-btns{display:flex;flex-direction:column;gap:12px;margin-top:38px;animation:up 1s ease both .9s}
+.btn{display:block;width:100%;text-align:center;background:var(--bl);color:var(--black);text-decoration:none;padding:16px;border-radius:40px;font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;border:none;cursor:pointer;font-family:inherit;transition:transform .15s}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:transparent;color:var(--bl);border:1px solid var(--bl)}
+.pulse{animation:pulse 2.4s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(200,138,74,.5)}70%{box-shadow:0 0 0 14px rgba(200,138,74,0)}100%{box-shadow:0 0 0 0 rgba(200,138,74,0)}}
+
+/* nav */
+nav{position:sticky;top:0;z-index:20;background:rgba(15,12,10,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;justify-content:space-between;padding:0 8px}
+nav a{flex:1;text-align:center;color:var(--muted);text-decoration:none;font-size:11px;letter-spacing:.2em;text-transform:uppercase;padding:18px 0 16px;border-bottom:2px solid transparent;transition:.3s}
+nav a.act{color:var(--bl);border-bottom-color:var(--bl)}
+
+/* itens da tabela */
+.hint-tap{font-size:12px;color:var(--bl);margin:-10px 0 18px;display:flex;align-items:center;gap:8px}
+.item{display:flex;align-items:center;gap:14px;padding:15px 12px;margin:0 -12px;border-bottom:1px solid var(--line);cursor:pointer;border-radius:12px;transition:background .25s}
+.item:active{background:rgba(200,138,74,.08)}
+.chk{flex:0 0 24px;height:24px;border-radius:50%;border:1px solid var(--bl);display:flex;align-items:center;justify-content:center;transition:.25s}
+.chk::after{content:'';width:6px;height:11px;border:solid var(--black);border-width:0 2px 2px 0;transform:rotate(45deg) scale(0);margin-top:-2px;transition:.25s}
+.item.sel{background:rgba(200,138,74,.1)}
+.item.sel .chk{background:var(--bl)}
+.item.sel .chk::after{transform:rotate(45deg) scale(1)}
+.info{flex:1}
+.pname{font-family:'Cormorant Garamond',serif;font-size:21px;line-height:1.2}
+.pdet{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:3px}
+.price{color:var(--bl);font-size:15px;white-space:nowrap;font-weight:400}
+.note{text-align:center;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-top:20px}
+.novo{display:inline-block;font-size:9px;letter-spacing:.3em;text-transform:uppercase;background:var(--bl);color:var(--black);padding:5px 12px;border-radius:20px;margin-bottom:14px;font-weight:700}
+
+/* clube */
+.clube{background:linear-gradient(180deg,#1b1511,#0f0c0a)}
+.hero-price{text-align:center;padding:30px 20px;border:1px solid var(--line);border-radius:22px;background:var(--card);margin-bottom:26px;position:relative;overflow:hidden}
+.hero-price::after{content:'';position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent);animation:shine 4s infinite}
+@keyframes shine{to{left:130%}}
+.hero-price .v{font-family:'Cormorant Garamond',serif;font-size:66px;line-height:1}
+.hero-price .v sup{font-size:20px;color:var(--bl);vertical-align:super}
+.hero-price .m{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+.dots{display:flex;justify-content:center;gap:8px;margin:18px 0 8px}
+.dot{width:14px;height:14px;border-radius:50%;border:1px solid var(--bl);transition:.5s}
+.dot.full{background:var(--bl)}
+.vtxt{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--bl)}
+
+.acc{border-bottom:1px solid var(--line)}
+.acc-h{display:flex;align-items:center;gap:14px;padding:16px 0;cursor:pointer}
+.ico{flex:0 0 32px;height:32px;border-radius:50%;border:1px solid var(--bl);color:var(--bl);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:17px}
+.acc-h b{flex:1;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:20px}
+.plus{width:14px;height:14px;position:relative;transition:transform .35s}
+.plus::before,.plus::after{content:'';position:absolute;background:var(--bl);left:50%;top:50%;transform:translate(-50%,-50%)}
+.plus::before{width:14px;height:1.5px}.plus::after{width:1.5px;height:14px}
+.acc.open .plus{transform:rotate(45deg)}
+.acc-b{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.acc-b p{font-size:14px;color:var(--muted);line-height:1.7;padding:0 0 16px 46px}
+
+/* simulador */
+.ctrl{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;margin-bottom:12px}
+.ctrl .lb{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.seg{display:flex;background:var(--black);border-radius:30px;padding:4px;gap:4px}
+.seg button{flex:1;background:transparent;border:none;color:var(--muted);font-family:inherit;font-size:12px;letter-spacing:.06em;padding:11px 6px;border-radius:26px;cursor:pointer;transition:.3s}
+.seg button.on{background:var(--bl);color:var(--black);font-weight:700}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.row span{font-size:14px;line-height:1.5}
+.row small{display:block;font-size:11px;color:var(--muted)}
+.sw{flex:0 0 50px;height:28px;border-radius:20px;background:var(--black);border:1px solid var(--line);position:relative;cursor:pointer;transition:.3s}
+.sw::after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:var(--muted);transition:.3s}
+.sw.on{background:var(--bl)}.sw.on::after{left:25px;background:var(--black)}
+.step{display:flex;align-items:center;gap:14px}
+.step button{width:34px;height:34px;border-radius:50%;border:1px solid var(--bl);background:transparent;color:var(--bl);font-size:18px;cursor:pointer}
+.step b{font-family:'Cormorant Garamond',serif;font-size:26px;min-width:22px;text-align:center}
+
+.result{margin-top:20px}
+.bar{margin-bottom:14px}
+.bar .t{display:flex;justify-content:space-between;font-size:13px;margin-bottom:7px}
+.bar .t b{font-weight:400}
+.track{height:12px;background:var(--card);border-radius:10px;overflow:hidden}
+.fill{height:100%;border-radius:10px;width:0;transition:width .9s cubic-bezier(.2,.8,.2,1)}
+.fill.a{background:#6e5a4a}.fill.c{background:linear-gradient(90deg,var(--bl),var(--bl2))}
+.save{text-align:center;padding:26px 16px;border-radius:22px;background:linear-gradient(160deg,#2c2119,#1b1511);border:1px solid var(--bl);margin-top:18px}
+.save .k{font-size:10px;letter-spacing:.35em;text-transform:uppercase;color:var(--bl)}
+.save .big{font-family:'Cormorant Garamond',serif;font-size:58px;line-height:1.05;margin:6px 0}
+.save .per{font-size:13px;color:var(--muted)}
+.save .yr{margin-top:14px;font-size:15px}
+.save .yr b{color:var(--bl);font-weight:700}
+.extra{font-size:13px;color:var(--muted);text-align:center;margin-top:14px;line-height:1.6}
+
+/* faq */
+.faq .acc-b p{padding-left:0}
+.faq .acc-h b{font-size:19px}
+
+/* barra fixa */
+.cart{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(27,21,17,.97);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--bl);padding:12px 18px calc(12px + env(safe-area-inset-bottom));transform:translateY(110%);transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.cart.show{transform:none}
+.cart .wrap{display:flex;align-items:center;gap:14px}
+.cart .tt{flex:1}
+.cart .tt small{display:block;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.cart .tt b{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:500}
+.cart .btn{width:auto;padding:14px 20px;font-size:11px}
+.cart .tip{font-size:11.5px;color:var(--bl2);margin-top:8px;text-align:center;display:none;cursor:pointer}
+.cart .tip.on{display:block}
+.toast{position:fixed;left:50%;top:70px;transform:translate(-50%,-20px);background:var(--bl);color:var(--black);font-size:12px;font-weight:700;letter-spacing:.08em;padding:10px 18px;border-radius:30px;opacity:0;transition:.35s;z-index:40;pointer-events:none;white-space:nowrap}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+footer{text-align:center;padding:50px 22px 40px}
+footer .n{font-family:'Cormorant Garamond',serif;font-size:32px}
+footer a{color:var(--bl);text-decoration:none;display:block;margin-top:8px;font-size:14px;letter-spacing:.08em}
+</style>
+</head>
+<body>
+
+<section class="cover">
+  <div class="wrap">
+    <p class="eyebrow">mãos &amp; pés</p>
+    <h1>Clube <em>Blindada</em></h1>
+    <div class="line"></div>
+    <p class="sig">Luana Dias</p>
+    <p class="tag">Nail Designer</p>
+    <div class="cover-btns">
+      <a class="btn pulse" href="#simular">Quanto eu economizo?</a>
+      <a class="btn ghost" href="#maos">Ver tabela e montar orçamento</a>
+    </div>
+  </div>
+</section>
+
+<nav><div class="wrap">
+  <a href="#maos">Mãos</a><a href="#pes">Pés</a><a href="#clube">Clube</a><a href="#simular">Simular</a>
+</div></nav>
+
+<section id="maos">
+  <div class="wrap">
+    <p class="eyebrow">cuidado das mãos</p>
+    <h2>Mãos</h2>
+    <p class="sub">Cutilagem inclusa em todos os procedimentos.</p>
+    <p class="hint-tap">✦ Toque nos procedimentos pra montar seu orçamento</p>
+    <div id="list-maos"></div>
+  </div>
+</section>
+
+<section class="alt" id="pes">
+  <div class="wrap">
+    <span class="novo">novidade</span>
+    <p class="eyebrow">cuidado dos pés</p>
+    <h2>Pés</h2>
+    <p class="sub">Você sai daqui com o pé pronto, podendo calçar até um tênis.</p>
+    <div id="list-pes"></div>
+  </div>
+</section>
+
+<section class="clube" id="clube">
+  <div class="wrap reveal">
+    <p class="eyebrow">programa fidelidade</p>
+    <h2>Clube <em>Blindada</em></h2>
+    <p class="sub">Mãos e pés impecáveis por 30 dias, com o seu horário guardado na minha agenda. Pra mulher que quer estar sempre pronta sem precisar pensar nisso.</p>
+    <div class="hero-price">
+      <div class="v"><sup>R$</sup>270</div>
+      <p class="m">por mês · plano semestral ou anual</p>
+      <div class="dots" id="dots"></div>
+      <p class="vtxt" id="vtxt"></p>
+    </div>
+    <p class="eyebrow">toque pra conhecer cada benefício</p>
+    <div id="benef"></div>
+  </div>
+</section>
+
+<section class="alt" id="simular">
+  <div class="wrap reveal">
+    <p class="eyebrow">na ponta do lápis</p>
+    <h2>Simule a sua <em>economia</em></h2>
+    <p class="sub">Escolha como seria o seu mês e veja a diferença entre pagar avulso e estar no clube.</p>
+
+    <div class="ctrl">
+      <p class="lb">nos pés eu quero</p>
+      <div class="seg" id="segPe">
+        <button data-v="along" class="on">Alongamento</button>
+        <button data-v="blind">Blindagem</button>
+      </div>
+    </div>
+    <div class="ctrl">
+      <div class="row"><span>Francesa sorriso nas mãos<small>R$ 100 avulso · R$ 70 no clube</small></span><div class="sw" id="swFr"></div></div>
+    </div>
+    <div class="ctrl">
+      <div class="row"><span>Reposições no mês<small>2 inclusas no clube</small></span>
+        <div class="step"><button id="rMenos">−</button><b id="rNum">2</b><button id="rMais">+</button></div></div>
+    </div>
+    <div class="ctrl">
+      <p class="lb">meu plano</p>
+      <div class="seg" id="segPl">
+        <button data-v="6" class="on">Semestral</button>
+        <button data-v="12">Anual</button>
+      </div>
+    </div>
+
+    <div class="result">
+      <div class="bar"><div class="t"><span>Pagando avulso</span><b id="vAv">R$ 0</b></div><div class="track"><div class="fill a" id="fAv"></div></div></div>
+      <div class="bar"><div class="t"><span>No Clube Blindada</span><b id="vCl">R$ 0</b></div><div class="track"><div class="fill c" id="fCl"></div></div></div>
+      <div class="save">
+        <p class="k">você economiza</p>
+        <div class="big" id="eMes">R$ 0</div>
+        <p class="per">todo mês</p>
+        <p class="yr">São <b id="ePer">R$ 0</b> <span id="lPer">no semestre</span></p>
+      </div>
+      <p class="extra">E ainda leva o dia e horário fixos na agenda, inclusive no fim de ano.</p>
+      <a class="btn pulse" id="btnClube" href="#" target="_blank" style="margin-top:22px">Quero minha vaga no clube</a>
+    </div>
+  </div>
+</section>
+
+<section class="faq">
+  <div class="wrap reveal">
+    <p class="eyebrow">dúvidas</p>
+    <h2>Perguntas <em>frequentes</em></h2>
+    <div id="faq" style="margin-top:20px"></div>
+  </div>
+</section>
+
+<footer>
+  <p class="eyebrow">agende seu horário</p>
+  <p class="n">Luana Dias</p>
+  <a href="https://wa.me/5534996817604">(34) 9 9681-7604</a>
+  <a href="https://instagram.com/luanadias_281" target="_blank">@luanadias_281</a>
+</footer>
+
+<div class="cart" id="cart"><div class="wrap" style="flex-direction:column;gap:0">
+  <div style="display:flex;align-items:center;gap:14px;width:100%">
+    <div class="tt"><small id="cQtd">0 itens</small><b id="cTot">R$ 0</b></div>
+    <a class="btn" id="btnOrc" href="#" target="_blank">Enviar no WhatsApp</a>
+  </div>
+  <p class="tip" id="cTip">✦ No Clube Blindada você teria mãos e pés por R$ 270. Simular →</p>
+</div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===== AJUSTE AQUI: quantas vagas ainda estão livres ===== */
+const VAGAS_TOTAL = 10;
+const VAGAS_LIVRES = 10;
+/* ========================================================= */
+const WA='5534996817604', CLUBE=270;
+const maos=[
+ {n:'Aplicação',p:180},{n:'Manutenção',p:150},{n:'Esmaltação em gel',d:'na aplicação ou manutenção',p:50},
+ {n:'Blindagem',d:'com esmaltação em gel',p:120},{n:'Decoração',d:'o par',p:40},
+ {n:'Decoração',d:'mão completa',p:100},{n:'Francesa sorriso',p:100},
+ {n:'Reposição',d:'na manutenção · por unha',p:10},{n:'Reposição',d:'fora da manutenção · por unha',p:18}];
+const pes=[
+ {n:'Reconstrução de dedão',p:80},{n:'Alongamento',d:'+ reconstrução de dedão',p:110},
+ {n:'Alongamento completo',d:'+ reconstrução + esmaltação em gel',p:160}];
+const fmt=v=>'R$ '+v.toLocaleString('pt-BR');
+const $=id=>document.getElementById(id);
+const sel=new Set();
+
+function render(arr,box,g){
+  arr.forEach((s,i)=>{
+    const el=document.createElement('div');el.className='item';
+    el.innerHTML=`<div class="chk"></div><div class="info"><div class="pname">${s.n}</div>${s.d?`<div class="pdet">${s.d}</div>`:''}</div><div class="price">${fmt(s.p)}</div>`;
+    const key=g+i;
+    el.onclick=()=>{
+      if(sel.has(key)){sel.delete(key);el.classList.remove('sel')}
+      else{sel.add(key);el.classList.add('sel');toast('Adicionado ao orçamento')}
+      updCart();
+    };
+    $(box).appendChild(el);
+  });
+}
+render(maos,'list-maos','m');render(pes,'list-pes','p');
+
+function items(){return [...sel].map(k=>{const s=(k[0]=='m'?maos:pes)[+k.slice(1)];return {...s,g:k[0]=='m'?'Mãos':'Pés'}})}
+function updCart(){
+  const it=items(),t=it.reduce((a,s)=>a+s.p,0);
+  $('cart').classList.toggle('show',it.length>0);
+  $('cQtd').textContent=it.length+(it.length==1?' item':' itens');
+  $('cTot').textContent=fmt(t);
+  const temMao=it.some(s=>s.g=='Mãos'),temPe=it.some(s=>s.g=='Pés');
+  $('cTip').classList.toggle('on',temMao&&temPe&&t>=CLUBE);
+  const msg=`Oi, Luana! Montei meu orçamento:\n${it.map(s=>'• '+s.g+': '+s.n+(s.d?' ('+s.d+')':'')+' '+fmt(s.p)).join('\n')}\nTotal: ${fmt(t)}\nQual horário você tem disponível?`;
+  $('btnOrc').href=`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`;
+}
+$('cTip').onclick=()=>$('simular').scrollIntoView({behavior:'smooth'});
+
+let tt;function toast(m){const t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),1300)}
+
+/* vagas */
+for(let i=0;i<VAGAS_TOTAL;i++){const d=document.createElement('div');d.className='dot';$('dots').appendChild(d)}
+$('vtxt').textContent=VAGAS_LIVRES==0?'vagas esgotadas · entre na lista de espera':(VAGAS_LIVRES==VAGAS_TOTAL?`apenas ${VAGAS_TOTAL} vagas`:`restam ${VAGAS_LIVRES} de ${VAGAS_TOTAL} vagas`);
+
+/* acordeões */
+function acc(box,list,num){
+  list.forEach(([h,b],i)=>{
+    const el=document.createElement('div');el.className='acc';
+    el.innerHTML=`<div class="acc-h">${num?`<div class="ico">${i+1}</div>`:''}<b>${h}</b><div class="plus"></div></div><div class="acc-b"><p>${b}</p></div>`;
+    el.querySelector('.acc-h').onclick=()=>{
+      const o=el.classList.toggle('open'),bd=el.querySelector('.acc-b');
+      bd.style.maxHeight=o?bd.scrollHeight+'px':0;
+    };
+    $(box).appendChild(el);
+  });
+}
+acc('benef',[
+ ['Manutenção das mãos','Com esmaltação em gel e durabilidade de 30 dias. Suas unhas lindas do começo ao fim do mês.'],
+ ['Pés prontos por 30 dias','Alongamento ou blindagem com esmaltação em gel. Você escolhe e já sai podendo calçar um tênis.'],
+ ['Dia e horário fixos','Seu lugar garantido na agenda, inclusive no fim de ano e nas épocas mais disputadas. Você não precisa correr atrás de horário.'],
+ ['2 reposições por mês','Duas unhas repostas sem custo. A partir da terceira, valor normal da tabela.'],
+ ['Francesa sorriso por R$ 70','Valor exclusivo de quem é do clube. Na tabela ela sai por R$ 100.']
+],true);
+acc('faq',[
+ ['Como funciona o plano?','O clube é um programa fidelidade semestral ou anual, com mensalidade de R$ 270.'],
+ ['O que acontece se eu precisar de mais reposições?','As duas primeiras do mês estão inclusas. A partir da terceira, você paga o valor da tabela.'],
+ ['Posso escolher entre alongamento e blindagem nos pés?','Pode sim. Você escolhe o que combina mais com a sua rotina, sempre com esmaltação em gel.'],
+ ['E se eu não puder ir no meu horário?','Me avisa com antecedência que a gente encontra o melhor caminho dentro do mês.'],
+ ['Como garanto minha vaga?','Toque no botão do clube e me chama no WhatsApp. As vagas são limitadas porque cada uma é um horário real da minha agenda.']
+],false);
+
+/* simulador */
+const st={pe:'along',fr:false,rep:2,pl:6};
+function seg(id,key,cast){
+  $(id).querySelectorAll('button').forEach(b=>b.onclick=()=>{
+    $(id).querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+    st[key]=cast?+b.dataset.v:b.dataset.v;sim();
+  });
+}
+seg('segPe','pe');seg('segPl','pl',true);
+$('swFr').onclick=()=>{st.fr=!st.fr;$('swFr').classList.toggle('on',st.fr);sim()};
+$('rMenos').onclick=()=>{st.rep=Math.max(0,st.rep-1);sim()};
+$('rMais').onclick=()=>{st.rep=Math.min(10,st.rep+1);sim()};
+
+const shown={};
+function count(id,to){
+  const from=shown[id]||0,t0=performance.now(),d=700;shown[id]=to;
+  (function f(t){const k=Math.min(1,(t-t0)/d),e=1-Math.pow(1-k,3);$(id).textContent=fmt(Math.round(from+(to-from)*e));if(k<1)requestAnimationFrame(f)})(t0);
+}
+function sim(){
+  $('rNum').textContent=st.rep;
+  const av=150+50+160+st.rep*10+(st.fr?100:0);
+  const cl=CLUBE+Math.max(0,st.rep-2)*10+(st.fr?70:0);
+  const ec=av-cl;
+  count('vAv',av);count('vCl',cl);count('eMes',ec);count('ePer',ec*st.pl);
+  $('lPer').textContent=st.pl==6?'no semestre':'no ano';
+  const mx=Math.max(av,cl);
+  $('fAv').style.width=(av/mx*100)+'%';$('fCl').style.width=(cl/mx*100)+'%';
+  const msg=`Oi, Luana! Quero garantir minha vaga no Clube Blindada.\nPlano: ${st.pl==6?'semestral':'anual'}\nNos pés: ${st.pe=='along'?'alongamento':'blindagem'}${st.fr?'\nQuero a francesa sorriso':''}`;
+  $('btnClube').href=`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`;
+}
+
+/* animações ao rolar e aba ativa */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');
+  if(e.target.closest('#clube'))document.querySelectorAll('.dot').forEach((d,i)=>setTimeout(()=>d.classList.toggle('full',i<VAGAS_TOTAL-VAGAS_LIVRES||VAGAS_LIVRES==VAGAS_TOTAL),i*90));
+  if(e.target.closest('#simular'))sim();}}),{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+const navs=document.querySelectorAll('nav a');
+const so=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)navs.forEach(a=>a.classList.toggle('act',a.getAttribute('href')=='#'+e.target.id))}),{rootMargin:'-45% 0px -50% 0px'});
+['maos','pes','clube','simular'].forEach(id=>so.observe($(id)));
+updCart();
+</script>
+</body>
+</html>
