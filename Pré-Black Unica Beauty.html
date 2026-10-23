@@ -1,0 +1,266 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pré-Black Unica Beauty</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,400;9..144,0,500;9..144,0,600;9..144,1,400;9..144,1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --creme:#FAF7F2;--creme2:#F3ECE3;--branco:#FFFFFF;--tinta:#1F1A18;
+    --vinho:#360000;--vinho-texto:#4E0D16;--ouro:#C9A15A;--verde:#2E5E4E;--marinho:#15294D;--madeira:#7E4C22;
+    --linha:rgba(78,13,22,0.14);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--creme);color:var(--tinta);font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:760px;margin:0 auto;padding:0 22px}
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif;font-weight:500;line-height:1.14;color:var(--vinho-texto)}
+  strong{font-weight:600;color:var(--vinho-texto)}
+  .eyebrow{color:var(--ouro);font-size:12.5px;letter-spacing:0.18em;text-transform:uppercase;font-weight:600;margin-bottom:14px}
+  section{padding:50px 0;border-bottom:1px solid var(--linha)}
+  h2.titulo{font-size:clamp(24px,6vw,36px);margin-bottom:16px}
+  .lead{font-size:1.04rem;max-width:60ch;margin-bottom:10px}
+
+  /* HERO */
+  .hero{background:var(--vinho);color:var(--creme);padding:72px 0 64px;text-align:center;border-bottom:none}
+  .hero .eyebrow{color:var(--ouro)}
+  .hero h1{color:var(--creme);font-size:clamp(34px,9vw,60px);font-weight:600;letter-spacing:-0.01em}
+  .hero .peach{font-size:1.4em}
+  .hero .sub{font-family:'Fraunces',serif;font-style:italic;color:rgba(250,247,242,0.9);font-size:clamp(17px,4vw,22px);margin-top:10px}
+  .hero p{max-width:40ch;margin:20px auto 0;color:rgba(250,247,242,0.85);font-size:16px}
+  .hero .para{margin-top:28px;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(201,161,90,0.85)}
+
+  /* META */
+  .metas{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:8px 0 22px}
+  .meta{border-radius:10px;padding:22px 20px;text-align:center}
+  .meta.piso{background:var(--branco);border:1px solid var(--linha)}
+  .meta.alvo{background:var(--verde);color:#EDF3EF}
+  .meta .ml{font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+  .meta.piso .ml{color:var(--madeira)}
+  .meta.alvo .ml{color:#D8C9A0}
+  .meta .mv{font-family:'Fraunces',serif;font-weight:600;font-size:2rem;line-height:1}
+  .meta.piso .mv{color:var(--vinho)}
+  .meta.alvo .mv{color:var(--ouro)}
+  .meta .mp{font-size:.9rem;margin-top:8px}
+  .meta.piso .mp{color:#7a6a60}
+  .meta.alvo .mp{color:#DCE7E1}
+  .ritmo{background:#FBF4EE;border:1px solid var(--linha);border-radius:10px;padding:16px 20px;font-size:1rem}
+  .ritmo b{color:var(--vinho-texto)}
+
+  /* TICKETS */
+  .tk-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+  .tk{background:var(--branco);border:1px solid var(--linha);border-radius:8px;padding:14px 16px}
+  .tk .tkt{font-family:'Fraunces',serif;font-weight:600;color:var(--marinho);font-size:1rem;margin-bottom:4px}
+  .tk .tkv{font-size:.9rem;color:var(--tinta);line-height:1.5}
+  .tk .tkv b{color:var(--vinho-texto)}
+
+  /* MENSAGENS */
+  .msg{background:var(--branco);border:1px solid var(--linha);border-radius:12px;overflow:hidden;margin-bottom:16px}
+  .msg .cab{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 18px;background:var(--creme2);border-bottom:1px solid var(--linha)}
+  .msg .cab .n{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+  .msg .cab .num{font-family:'Fraunces',serif;font-style:italic;font-weight:600;color:var(--ouro);font-size:1.1rem}
+  .msg .cab .tit{font-family:'Fraunces',serif;font-weight:600;color:var(--vinho-texto);font-size:1.02rem}
+  .msg .cab .quem{font-size:.78rem;color:var(--madeira);display:block;width:100%;margin-top:1px}
+  .copiar{flex:0 0 auto;border:1px solid var(--ouro);background:transparent;color:var(--vinho-texto);font-family:'Inter',sans-serif;font-size:.8rem;font-weight:600;padding:7px 14px;border-radius:30px;cursor:pointer;transition:all .2s}
+  .copiar:hover{background:var(--ouro);color:#fff}
+  .copiar.ok{background:var(--verde);border-color:var(--verde);color:#fff}
+  .msg .corpo{padding:16px 18px;font-size:.98rem;line-height:1.55;white-space:pre-wrap}
+
+  /* PASSOS */
+  .passo{display:grid;grid-template-columns:40px 1fr;gap:14px;padding:14px 0;border-top:1px solid var(--linha)}
+  .passo:first-child{border-top:none}
+  .passo .pn{font-family:'Fraunces',serif;font-style:italic;color:var(--marinho);font-size:1.5rem;line-height:1;font-weight:500}
+  .passo .pt{margin:0;font-size:.98rem;line-height:1.5;align-self:center}
+  .passo .pt b{color:var(--vinho-texto)}
+
+  /* FECHO */
+  .fecho{background:var(--creme2);text-align:center;border-bottom:none}
+  .fecho h2{font-size:clamp(24px,6vw,36px);margin-bottom:14px}
+  .fecho p{max-width:46ch;margin:0 auto;font-size:1.04rem}
+  .fecho .frase{font-family:'Fraunces',serif;font-style:italic;color:var(--vinho);font-size:1.3rem;margin-top:22px}
+
+  .nota-rascunho{background:#FBF4EE;border:1px dashed var(--ouro);border-radius:10px;padding:14px 18px;margin-top:18px;font-size:.92rem;color:#5a4e46}
+  .nota-rascunho b{color:var(--vinho-texto)}
+
+  @media (max-width:540px){
+    .metas{grid-template-columns:1fr}
+    .tk-grid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="wrap">
+      <div class="eyebrow">Unica Beauty · Rotina Comercial</div>
+      <h1>Pré-Black <span class="peach">🍑</span></h1>
+      <div class="sub">outubro, pra sentir o terreno do Consórcio Beauty</div>
+      <p>A sua meta do mês, os modelos prontos pra buscar as pacientes certas, e o passo a passo do dia.</p>
+      <div class="para">preparado para a Dra. Evelin</div>
+    </div>
+  </header>
+
+  <!-- META -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow">A meta de outubro</div>
+      <h2 class="titulo">Duas metas, uma pra sentir e uma pra celebrar.</h2>
+      <p class="lead">A pré-Black roda de hoje até o dia 31, só pra sentir como o Consórcio Beauty responde. A conta é simples, com um ticket médio de <strong>R$2.500</strong> entre glúteo e bioestimuladores:</p>
+      <div class="metas">
+        <div class="meta piso">
+          <div class="ml">Meta pra sentir</div>
+          <div class="mv">5 pacientes</div>
+          <div class="mp">cerca de R$12.500 fechados no consórcio</div>
+        </div>
+        <div class="meta alvo">
+          <div class="ml">Meta pra celebrar</div>
+          <div class="mv">8 pacientes</div>
+          <div class="mp">cerca de R$20.000 fechados no consórcio</div>
+        </div>
+      </div>
+      <div class="ritmo">Traduzindo pro dia a dia: são <b>2 a 3 pacientes fechadas por semana</b> até o fim do mês. Quando você olha assim, a meta para de assustar e vira rotina.</div>
+    </div>
+  </section>
+
+  <!-- TICKETS -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow">O que o consórcio viabiliza</div>
+      <h2 class="titulo">O seu mapa de tickets.</h2>
+      <p class="lead">O Consórcio Beauty brilha nos protocolos de maior valor, que é onde o cartão costuma travar. Esses são os seus carros-chefe da campanha:</p>
+      <div class="tk-grid">
+        <div class="tk"><div class="tkt">Unica Power Bumbum 🍑</div><div class="tkv">preenchimento de glúteo, de <b>R$2.199</b> (40ml) a <b>R$3.599</b> (100ml)</div></div>
+        <div class="tk"><div class="tkt">Bioestimuladores</div><div class="tkv">colágeno <b>R$1.599</b>, Barbie <b>R$1.899</b>, Bio 55 Ultra <b>R$2.999</b></div></div>
+        <div class="tk"><div class="tkt">Lipoescultura Manual</div><div class="tkv">pacotes de 4 a 24 sessões, de <b>R$582</b> a <b>R$2.376</b></div></div>
+        <div class="tk"><div class="tkt">Subcisão</div><div class="tkv"><b>R$799</b>, retirada de fibrose, ótimo pra somar no protocolo</div></div>
+      </div>
+      <div class="nota-rascunho">Dica de ouro: o consórcio foi feito pra viabilizar o sim nos tickets de R$1.500 pra cima. Ofereça o protocolo completo primeiro, porque agora o valor cheio deixou de ser o impeditivo.</div>
+    </div>
+  </section>
+
+  <!-- MENSAGENS -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow">A rotina comercial</div>
+      <h2 class="titulo">Cinco modelos prontos pra buscar paciente.</h2>
+      <p class="lead">Cada modelo é pra um momento diferente da cliente. Troque o <strong>[Nome]</strong> e o <strong>[procedimento]</strong>, e dispare. É só tocar em copiar.</p>
+
+      <div class="msg">
+        <div class="cab">
+          <div class="n"><span class="num">01</span><span class="tit">Travou no cartão</span><span class="quem">quem quis fechar e parou por causa do limite (o seu, que já funciona)</span></div>
+          <button class="copiar">Copiar</button>
+        </div>
+        <div class="corpo">[Nome], tive uma novidade hoje aqui na clínica 🤍
+
+Lembra que da última vez o valor no cartão te travou? Pois é, eu acabei de trazer pra Unica Beauty o Consórcio Beauty, uma forma de você fazer o seu [procedimento] dividindo tudo no boleto, em parcelas que cabem no seu mês, sem depender do limite do cartão.
+
+É novidade quentinha aqui, e eu já pensei em você entre as primeiras a aproveitar.
+
+Acho que a gente tem um problema resolvido e um sonho pra realizar. Bora? 👀🤩</div>
+      </div>
+
+      <div class="msg">
+        <div class="cab">
+          <div class="n"><span class="num">02</span><span class="tit">Cliente que já te ama</span><span class="quem">quem já fez com você e confia no seu trabalho</span></div>
+          <button class="copiar">Copiar</button>
+        </div>
+        <div class="corpo">[Nome], passei aqui pra te dar um presente de novidade 🤍
+
+Você que já conhece o meu cuidado vai amar isso: agora, na Unica Beauty, dá pra realizar aquele protocolo dos sonhos pelo Consórcio Beauty, dividindo no boleto, em parcelas que cabem no seu mês, sem depender do limite do cartão.
+
+Eu já separei um lugar na agenda pensando em você. Vem fazer a sua avaliação que a gente monta o seu plano juntinhas? 😍</div>
+      </div>
+
+      <div class="msg">
+        <div class="cab">
+          <div class="n"><span class="num">03</span><span class="tit">Orçamento parado</span><span class="quem">quem pediu valor, gostou e sumiu</span></div>
+          <button class="copiar">Copiar</button>
+        </div>
+        <div class="corpo">Oi, [Nome]! 🤍 Fiquei pensando em você e naquele [procedimento] que você quis fazer.
+
+Tenho uma notícia que muda tudo: agora dá pra dividir no Consórcio Beauty, em parcelas que cabem no seu mês, sem precisar de limite no cartão. Aquele valor que pesou de uma vez, agora cabe tranquilo no seu bolso.
+
+Quer que eu já veja um horário pra sua avaliação? 🥰</div>
+      </div>
+
+      <div class="msg">
+        <div class="cab">
+          <div class="n"><span class="num">04</span><span class="tit">Primeiro contato</span><span class="quem">quem ainda não fechou nada com você</span></div>
+          <button class="copiar">Copiar</button>
+        </div>
+        <div class="corpo">[Nome], tudo bem? 🤍 Aqui é a Evelin, da Unica Beauty.
+
+Trouxe uma novidade que o Brasil ainda está começando a usar: o Consórcio Beauty, que deixa você realizar o seu protocolo dividindo no boleto, em parcelas leves, sem depender do cartão.
+
+Me conta uma coisa: se o valor deixasse de ser o problema, qual procedimento você faria primeiro? 😍</div>
+      </div>
+
+      <div class="msg">
+        <div class="cab">
+          <div class="n"><span class="num">05</span><span class="tit">Última chamada</span><span class="quem">pra disparar nos últimos dias de outubro</span></div>
+          <button class="copiar">Copiar</button>
+        </div>
+        <div class="corpo">[Nome], corre que é pra agora 🤍
+
+A condição de pré-Black da Unica Beauty vai só até o fim de outubro, e as vagas dessa primeira leva do Consórcio Beauty são pouquinhas.
+
+Se você quer realizar o seu [procedimento] dividindo leve no boleto, sem depender do cartão, essa é a hora certa. Garanto o seu lugar? ⏳✨</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PASSO A PASSO -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow">Como virar rotina</div>
+      <h2 class="titulo">O seu passo a passo do dia.</h2>
+      <div class="passo"><span class="pn">1</span><p class="pt">Monte a sua lista em três grupos: quem <b>travou no cartão</b>, quem <b>sumiu</b>, e quem <b>pediu orçamento</b> e não voltou.</p></div>
+      <div class="passo"><span class="pn">2</span><p class="pt">Comece sempre pelos mais quentes, que são os que travaram no cartão, com o Modelo 01.</p></div>
+      <div class="passo"><span class="pn">3</span><p class="pt">Dispare de <b>5 a 10 mensagens por dia</b>, personalizando o nome e o procedimento que a pessoa queria.</p></div>
+      <div class="passo"><span class="pn">4</span><p class="pt">De manhã você dispara, de tarde você responde e agenda. Quem demonstrar interesse, chama pra <b>avaliação presencial</b>, que é onde você monta o plano do consórcio.</p></div>
+      <div class="passo"><span class="pn">5</span><p class="pt">Anote cada fechamento num lugar só, pra ver a sua meta subindo. Cada sim te aproxima das 8 pacientes.</p></div>
+    </div>
+  </section>
+
+  <!-- FECHO -->
+  <section class="fecho">
+    <div class="wrap">
+      <h2>Evelin, é a sua vez de colher.</h2>
+      <p>Você já tem o método, já tem o protocolo que encanta e agora tem o caminho que viabiliza o sim. O que falta é só o movimento diário de chamar, com carinho e firmeza.</p>
+      <div class="frase">Uma conversa por vez, a meta acontece.</div>
+    </div>
+  </section>
+
+<script>
+  document.querySelectorAll('.msg').forEach(function(card){
+    var btn = card.querySelector('.copiar');
+    var corpo = card.querySelector('.corpo');
+    btn.addEventListener('click', function(){
+      var txt = corpo.innerText;
+      try {
+        navigator.clipboard.writeText(txt).then(function(){ flash(btn); }, function(){ fallback(txt, btn); });
+      } catch(e){ fallback(txt, btn); }
+    });
+  });
+  function flash(btn){
+    var old = btn.textContent;
+    btn.textContent = 'Copiado ✓';
+    btn.classList.add('ok');
+    setTimeout(function(){ btn.textContent = old; btn.classList.remove('ok'); }, 1600);
+  }
+  function fallback(txt, btn){
+    try {
+      var ta = document.createElement('textarea');
+      ta.value = txt; document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta); flash(btn);
+    } catch(e){ /* silencioso */ }
+  }
+</script>
+</body>
+</html>
+
+</body></html>
