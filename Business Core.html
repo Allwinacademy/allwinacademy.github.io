@@ -1,0 +1,1028 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Business Core</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Hanken+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* Layout: coluna de navegação editorial à esquerda (gaveta no celular), leitura à direita.
+     Mundo visual único e claro, paleta oficial All Win. */
+  :root{
+    --creme:#FAF7F2;
+    --branco:#FFFFFF;
+    --rail:#F3EEE6;
+    --ink:#1F1A18;
+    --muted:#6E5F54;
+    --vinho:#360000;
+    --vinho-texto:#4E0D16;
+    --madeira:#7E4C22;
+    --espresso:#3E2513;
+    --ouro:#C9A15A;
+    --marinho:#15294D;
+    --verde:#2E5B43;
+    --line:rgba(62,37,19,.14);
+    --line-forte:rgba(62,37,19,.26);
+    --sombra:0 1px 2px rgba(62,37,19,.05), 0 8px 24px rgba(62,37,19,.05);
+    /* semânticos do mapa comportamental */
+    --k-relatado:#15294D;
+    --k-hipotese:#7E4C22;
+    --k-observacao:#4E0D16;
+    --k-acao:#2E5B43;
+    --serif:"Playfair Display",Georgia,serif;
+    --sans:"Hanken Grotesk",system-ui,-apple-system,sans-serif;
+    --mono:"Spline Sans Mono",ui-monospace,Menlo,monospace;
+    --rail-w:266px;
+    color-scheme:light;
+  }
+  *{box-sizing:border-box}
+  html{background:var(--creme)}
+  body{
+    margin:0;background:var(--creme);color:var(--ink);
+    font-family:var(--sans);font-size:16px;line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--rail);z-index:60}
+  h1,h2,h3,h4{font-family:var(--serif);color:var(--vinho-texto);margin:0;line-height:1.18;font-weight:600;text-wrap:balance}
+  p{margin:0}
+  button{font-family:inherit}
+  a{color:var(--madeira)}
+  ::selection{background:rgba(201,161,90,.3)}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--madeira);font-weight:500}
+  .na{font-family:var(--sans);font-style:italic;color:var(--muted);font-weight:400}
+
+  /* ---------- SHELL ---------- */
+  .shell{display:grid;grid-template-columns:var(--rail-w) 1fr;min-height:100%}
+
+  /* ---------- RAIL ---------- */
+  .rail{
+    position:sticky;top:0;align-self:start;height:100dvh;overflow-y:auto;
+    background:var(--rail);border-right:1px solid var(--line);
+    display:flex;flex-direction:column;
+    padding:max(28px,env(safe-area-inset-top,0px)) 20px 24px max(22px,env(safe-area-inset-left,0px));
+    z-index:50;
+  }
+  .brand{display:flex;flex-direction:column;gap:3px;padding-bottom:22px;border-bottom:1px solid var(--line)}
+  .brand .mark{font-family:var(--serif);font-size:22px;font-weight:600;color:var(--vinho);letter-spacing:.01em;line-height:1}
+  .brand .house{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--madeira)}
+  .brand .motto{font-family:var(--serif);font-style:italic;font-size:13px;color:var(--muted);margin-top:8px;line-height:1.35}
+
+  nav{display:flex;flex-direction:column;gap:2px;padding:20px 0;flex:1}
+  .nav-item{
+    display:flex;align-items:center;gap:12px;width:100%;text-align:left;cursor:pointer;
+    background:none;border:0;border-radius:3px;padding:11px 12px 11px 14px;color:var(--muted);
+    font-size:15px;font-weight:500;letter-spacing:.005em;position:relative;transition:background .18s,color .18s;
+  }
+  .nav-item .idx{font-family:var(--mono);font-size:11px;color:var(--ouro);width:16px;flex:none}
+  .nav-item:hover{background:rgba(62,37,19,.045);color:var(--ink)}
+  .nav-item[aria-current="page"]{color:var(--vinho-texto);font-weight:600;background:rgba(54,0,0,.05)}
+  .nav-item[aria-current="page"]::before{content:"";position:absolute;left:0;top:7px;bottom:7px;width:3px;border-radius:2px;background:var(--ouro)}
+  .nav-item:focus-visible{outline:2px solid var(--vinho);outline-offset:1px}
+
+  .rail-foot{padding-top:18px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:3px}
+  .rail-foot .sig{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--vinho)}
+  .rail-foot .tiny{font-size:11px;color:var(--muted)}
+
+  /* ---------- MAIN ---------- */
+  main{min-width:0;display:flex;flex-direction:column}
+  .topbar{
+    position:sticky;top:0;z-index:40;background:var(--creme);border-bottom:1px solid var(--line);
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+    padding:14px max(16px,env(safe-area-inset-right,0px)) 14px max(24px,env(safe-area-inset-left,0px));
+    padding-top:calc(14px + env(safe-area-inset-top,0px));
+  }
+  .topbar::before{content:"";position:absolute;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--creme)}
+  .tb-left{display:flex;align-items:center;gap:12px;min-width:0}
+  .burger{display:none;background:none;border:1px solid var(--line-forte);border-radius:4px;width:38px;height:38px;flex:none;cursor:pointer;color:var(--vinho-texto)}
+  .burger svg{width:18px;height:18px;display:block;margin:auto}
+  .tb-title{display:flex;flex-direction:column;min-width:0}
+  .tb-title .eyebrow{line-height:1.4}
+  .tb-title h1{font-size:19px;font-weight:600;color:var(--vinho-texto);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .client-chip{display:flex;align-items:center;gap:10px;flex:none}
+  .client-chip .av{width:38px;height:38px;border-radius:50%;background:var(--vinho);color:#F3E7D3;font-family:var(--serif);font-size:15px;display:flex;align-items:center;justify-content:center;flex:none;letter-spacing:.02em}
+  .client-chip .who{display:flex;flex-direction:column;line-height:1.25}
+  .client-chip .who b{font-weight:600;font-size:14px;color:var(--ink)}
+  .client-chip .who span{font-size:11.5px;color:var(--muted)}
+
+  .view{padding:34px max(20px,env(safe-area-inset-right,0px)) 72px max(24px,env(safe-area-inset-left,0px));max-width:1000px;width:100%}
+  .view[hidden]{display:none}
+  @media (prefers-reduced-motion:no-preference){
+    .view:not([hidden]){animation:fade .4s ease both}
+    @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  }
+
+  .view-head{margin-bottom:28px}
+  .view-head .eyebrow{display:block;margin-bottom:8px}
+  .view-head h2{font-size:clamp(28px,4.4vw,38px)}
+  .view-head p.sub{color:var(--muted);margin-top:10px;max-width:60ch;font-size:16px}
+
+  /* ---------- COMPONENTES BASE ---------- */
+  .grid{display:grid;gap:16px}
+  .cols-2{grid-template-columns:repeat(2,1fr)}
+  .cols-3{grid-template-columns:repeat(3,1fr)}
+
+  .panel{background:var(--branco);border:1px solid var(--line);border-radius:5px;padding:22px;box-shadow:var(--sombra)}
+  .panel .label{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--madeira);display:block;margin-bottom:9px}
+  .panel .value{font-size:16px;color:var(--ink);line-height:1.5}
+  .panel.lead{border-left:3px solid var(--ouro)}
+
+  .hero-meta{background:var(--vinho);color:#F1E4D6;border-radius:6px;padding:28px 26px;display:flex;flex-direction:column;gap:6px;box-shadow:var(--sombra)}
+  .hero-meta .label{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ouro)}
+  .hero-meta .fig{font-family:var(--mono);font-size:clamp(32px,6vw,44px);font-weight:500;color:#FFF;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+  .hero-meta .note{font-size:13.5px;color:#D9C7B7}
+
+  .stack{display:flex;flex-direction:column;gap:16px}
+
+  .meter{height:6px;border-radius:3px;background:rgba(62,37,19,.1);overflow:hidden;margin-top:4px}
+  .meter i{display:block;height:100%;background:var(--ouro);width:0}
+
+  .timeline{display:flex;flex-direction:column;gap:0;position:relative}
+  .tl-item{display:grid;grid-template-columns:22px 1fr;gap:14px;padding:0 0 22px}
+  .tl-item:last-child{padding-bottom:0}
+  .tl-dot{display:flex;flex-direction:column;align-items:center}
+  .tl-dot .d{width:11px;height:11px;border-radius:50%;background:var(--vinho);margin-top:4px;flex:none}
+  .tl-dot .line{width:1px;flex:1;background:var(--line-forte);margin-top:4px}
+  .tl-item:last-child .tl-dot .line{display:none}
+  .tl-body .when{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--madeira);text-transform:uppercase}
+  .tl-body h4{font-size:17px;margin:3px 0 4px}
+  .tl-body p{font-size:14.5px;color:var(--muted)}
+
+  .ladder{display:flex;flex-direction:column;gap:2px}
+  .rung{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1px solid var(--line);border-radius:4px;background:var(--branco)}
+  .rung .n{font-family:var(--mono);font-size:12px;color:var(--ouro);width:22px;flex:none}
+  .rung .nm{font-family:var(--serif);font-size:17px;color:var(--ink)}
+  .rung .tag{margin-left:auto;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#F1E4D6;background:var(--vinho);padding:4px 9px;border-radius:20px;flex:none}
+  .rung.atual{border-color:var(--vinho);background:rgba(54,0,0,.04)}
+  .rung.futuro{opacity:.55}
+
+  .sem{border:1px solid var(--line);border-radius:5px;padding:20px;background:var(--branco);display:flex;flex-direction:column;gap:12px}
+  .sem .top{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .sem .per{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--madeira)}
+  .sem h4{font-size:18px}
+  .sem .marco{font-family:var(--mono);font-size:14px;color:var(--vinho-texto);font-variant-numeric:tabular-nums}
+  .sem ul{margin:0;padding-left:18px;color:var(--ink);font-size:14.5px;display:flex;flex-direction:column;gap:5px}
+  .sem ul li::marker{color:var(--ouro)}
+
+  .read{background:var(--branco);border:1px solid var(--line);border-radius:5px;padding:22px;display:flex;flex-direction:column;gap:7px}
+  .read h4{font-size:18px}
+  .read .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--madeira)}
+  .read p{font-size:15px;color:var(--ink);line-height:1.55}
+
+  .note-soft{font-size:13px;color:var(--muted);font-style:italic;margin-top:4px}
+  .soon{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--madeira);border:1px solid var(--line-forte);border-radius:20px;padding:5px 12px}
+  .section-title{font-family:var(--serif);font-size:13px;letter-spacing:.02em;color:var(--madeira);text-transform:uppercase;margin:30px 0 14px;font-weight:600}
+
+  /* ========== COMPORTAMENTO ========== */
+  .persist-note{display:flex;gap:10px;align-items:flex-start;background:rgba(21,41,77,.05);border:1px solid rgba(21,41,77,.16);border-radius:5px;padding:12px 14px;font-size:13px;color:#3d4a5e;margin-top:16px}
+  .persist-note svg{width:16px;height:16px;flex:none;margin-top:2px;stroke:var(--marinho)}
+
+  .subtabs{display:flex;gap:4px;overflow-x:auto;border-bottom:1px solid var(--line);margin-bottom:26px;padding-bottom:0;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+  .subtab{flex:none;background:none;border:0;border-bottom:2px solid transparent;cursor:pointer;color:var(--muted);font-size:14px;font-weight:600;padding:12px 14px;display:flex;align-items:center;gap:8px;white-space:nowrap;transition:color .18s}
+  .subtab .ltr{font-family:var(--mono);font-size:11px;color:var(--ouro)}
+  .subtab:hover{color:var(--ink)}
+  .subtab[aria-selected="true"]{color:var(--vinho-texto);border-bottom-color:var(--vinho)}
+  .subtab:focus-visible{outline:2px solid var(--vinho);outline-offset:-2px;border-radius:3px}
+  .submodule[hidden]{display:none}
+
+  .mod-intro{font-size:15.5px;color:var(--muted);max-width:62ch;margin-bottom:20px;line-height:1.6}
+
+  /* temperamento cards (A) */
+  .temp-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .temp-card{border:1px solid var(--line);border-radius:6px;background:var(--branco);padding:22px;display:flex;flex-direction:column;gap:12px}
+  .temp-card.second{background:var(--rail)}
+  .temp-card .tt{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .temp-card .tt h4{font-size:21px}
+  .temp-card .tt .role{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--vinho);padding:3px 8px;border-radius:12px}
+  .temp-card.second .tt .role{background:var(--madeira)}
+  .temp-card .desc{font-size:14.5px;color:var(--ink);line-height:1.55}
+  .temp-dl{display:flex;flex-direction:column;gap:8px;margin-top:2px}
+  .temp-dl .row{display:flex;gap:10px;font-size:13.5px}
+  .temp-dl .row b{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--madeira);flex:none;width:58px;padding-top:2px}
+  .temp-dl .row span{color:var(--ink)}
+  .inter{border-left:3px solid var(--ouro);background:var(--branco);border-radius:5px;padding:18px 20px;margin-top:18px}
+  .inter .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--madeira);display:block;margin-bottom:6px}
+  .inter p{font-size:15.5px;color:var(--vinho-texto);font-family:var(--serif);line-height:1.5}
+
+  /* registro individual */
+  .reg{border:1px solid var(--line);border-radius:6px;background:var(--branco);overflow:hidden;margin-bottom:12px;border-left:3px solid var(--kcolor,var(--line-forte))}
+  .reg-head{width:100%;display:flex;align-items:center;gap:12px;background:none;border:0;cursor:pointer;padding:16px 18px;text-align:left}
+  .reg-head:hover{background:rgba(62,37,19,.025)}
+  .reg-head:focus-visible{outline:2px solid var(--vinho);outline-offset:-2px}
+  .reg-kind{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;padding:3px 7px;border-radius:10px;flex:none;color:#fff;background:var(--kcolor,var(--muted))}
+  .reg-title{font-family:var(--serif);font-size:17px;color:var(--ink);flex:1;min-width:0;line-height:1.3}
+  .reg-status{font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:var(--muted);flex:none;text-align:right;max-width:42%;line-height:1.3}
+  .reg-chev{width:18px;height:18px;flex:none;stroke:var(--madeira);transition:transform .2s}
+  .reg-head[aria-expanded="true"] .reg-chev{transform:rotate(180deg)}
+  .reg-body{padding:4px 18px 20px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:16px}
+  .reg-desc{font-size:14px;color:var(--muted);line-height:1.55;padding-top:14px}
+
+  .seg{display:flex;flex-wrap:wrap;gap:6px}
+  .seg-btn{font-size:12px;font-weight:600;border:1px solid var(--line-forte);background:var(--creme);color:var(--muted);border-radius:20px;padding:7px 13px;cursor:pointer;transition:all .15s;line-height:1.2}
+  .seg-btn:hover{border-color:var(--madeira);color:var(--ink)}
+  .seg-btn[aria-pressed="true"]{color:#fff;border-color:transparent}
+  .seg-btn[data-v="0"][aria-pressed="true"]{background:var(--muted)}
+  .seg-btn[data-v="1"][aria-pressed="true"]{background:var(--marinho)}
+  .seg-btn[data-v="2"][aria-pressed="true"]{background:var(--madeira)}
+  .seg-btn[data-v="3"][aria-pressed="true"]{background:var(--verde)}
+
+  .fieldset{display:flex;flex-direction:column;gap:14px}
+  .fld{display:flex;flex-direction:column;gap:6px}
+  .fld label{font-size:13px;font-weight:600;color:var(--vinho-texto)}
+  .fld textarea,.fld input{
+    width:100%;font-family:var(--sans);font-size:14.5px;color:var(--ink);background:var(--creme);
+    border:1px solid var(--line-forte);border-radius:5px;padding:10px 12px;resize:vertical;line-height:1.5;
+  }
+  .fld textarea{min-height:58px}
+  .fld textarea:focus,.fld input:focus{outline:none;border-color:var(--vinho);background:var(--branco)}
+  .fld textarea::placeholder,.fld input::placeholder{color:#a79688}
+  .mini-label{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--madeira);margin-bottom:-2px}
+
+  /* exercícios (E) */
+  .exc{border:1px solid var(--line);border-radius:6px;background:var(--branco);padding:20px;display:flex;flex-direction:column;gap:12px}
+  .exc.destaque{border-left:3px solid var(--ouro);background:#FBF6EC}
+  .exc .top{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  .exc h4{font-size:17px}
+  .exc .flag{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--ouro);padding:3px 8px;border-radius:10px}
+  .exc .como{font-size:14px;color:var(--ink);line-height:1.55}
+  .exc .como b{color:var(--madeira)}
+
+  /* ========== ORGANOGRAMA ========== */
+  .legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin-bottom:12px}
+  .legend .lg{display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--muted)}
+  .legend .dot{width:11px;height:11px;border-radius:3px;flex:none}
+  .org-controls{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+  .org-btn{font-size:12.5px;font-weight:600;border:1px solid var(--line-forte);background:var(--branco);color:var(--vinho-texto);border-radius:4px;padding:8px 14px;cursor:pointer}
+  .org-btn:hover{border-color:var(--madeira)}
+  .org-disc{font-size:12.5px;color:var(--muted);font-style:italic;margin:4px 0 20px}
+
+  .org{position:relative;display:flex;flex-direction:column;gap:0}
+  .node{position:relative;padding-left:40px;padding-bottom:16px}
+  .node::before{content:"";position:absolute;left:14px;top:26px;bottom:-4px;width:2px;background:var(--line-forte)}
+  .node:last-child::before{display:none}
+  .node-knob{position:absolute;left:7px;top:18px;width:16px;height:16px;border-radius:50%;background:var(--branco);border:3px solid var(--kcolor,var(--muted));z-index:1}
+  .node-card{border:1px solid var(--line);border-left:3px solid var(--kcolor,var(--muted));border-radius:6px;background:var(--branco);box-shadow:var(--sombra)}
+  .node-main{display:flex;align-items:flex-start;gap:12px;padding:15px 16px}
+  .node-open{flex:1;min-width:0;text-align:left;background:none;border:0;cursor:pointer;display:flex;flex-direction:column;gap:6px;padding:0}
+  .node-open:focus-visible{outline:2px solid var(--vinho);outline-offset:2px;border-radius:3px}
+  .node-tagrow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .node-kind{font-family:var(--mono);font-size:9px;letter-spacing:.09em;text-transform:uppercase;padding:3px 7px;border-radius:10px;color:#fff;background:var(--kcolor,var(--muted))}
+  .node-level{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--madeira)}
+  .node-title{font-family:var(--serif);font-size:16.5px;color:var(--ink);line-height:1.3}
+  .node-saved{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--verde);display:none;align-items:center;gap:4px}
+  .node-saved.on{display:inline-flex}
+  .node-chev{flex:none;width:34px;height:34px;border:1px solid var(--line-forte);border-radius:5px;background:var(--creme);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--madeira)}
+  .node-chev svg{width:16px;height:16px;transition:transform .2s}
+  .node[data-open="true"] .node-chev svg{transform:rotate(180deg)}
+  .node-items{padding:0 16px 15px;display:flex;flex-wrap:wrap;gap:7px}
+  .node[data-open="false"] .node-items,.node[data-open="false"] .node-mini{display:none}
+  .chip{font-size:12.5px;color:var(--vinho-texto);background:var(--creme);border:1px solid var(--line);border-radius:14px;padding:5px 11px}
+  .node-mini{padding:0 16px 15px;font-size:13.5px;color:var(--muted);line-height:1.5}
+
+  /* drawer de detalhe do nó */
+  .node-drawer{
+    position:fixed;top:0;right:0;bottom:0;width:min(440px,92vw);background:var(--creme);z-index:70;
+    transform:translateX(102%);transition:transform .3s cubic-bezier(.2,.7,.2,1);
+    display:flex;flex-direction:column;box-shadow:-8px 0 40px rgba(31,26,24,.22);
+    padding-top:env(safe-area-inset-top,0px);padding-right:env(safe-area-inset-right,0px);
+  }
+  .node-drawer.open{transform:none}
+  .nd-head{display:flex;align-items:flex-start;gap:12px;padding:20px 20px 16px;border-bottom:1px solid var(--line)}
+  .nd-head .nd-meta{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px}
+  .nd-close{flex:none;width:36px;height:36px;border:1px solid var(--line-forte);border-radius:5px;background:var(--branco);cursor:pointer;color:var(--vinho-texto);font-size:18px;line-height:1}
+  .nd-title{font-family:var(--serif);font-size:20px;color:var(--vinho-texto);line-height:1.25}
+  .nd-body{overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:18px}
+  .nd-sec .k{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--madeira);display:block;margin-bottom:7px}
+  .nd-sec p{font-size:14.5px;color:var(--ink);line-height:1.6}
+  .nd-chips{display:flex;flex-wrap:wrap;gap:7px}
+  .nd-link{display:flex;gap:9px;align-items:flex-start;font-size:14px;color:var(--vinho-texto);background:var(--branco);border:1px solid var(--line);border-radius:5px;padding:12px 14px}
+  .nd-link svg{width:15px;height:15px;flex:none;margin-top:3px;stroke:var(--ouro)}
+  .nodrawer-scrim,.scrim{position:fixed;inset:0;background:rgba(31,26,24,.45);z-index:45;opacity:0;pointer-events:none;transition:opacity .25s}
+  .nodrawer-scrim{z-index:65}
+  .nodrawer-scrim.show,.scrim.show{opacity:1;pointer-events:auto}
+
+  /* ---------- RESPONSIVO ---------- */
+  @media (max-width:860px){
+    .shell{grid-template-columns:1fr}
+    .rail{
+      position:fixed;top:0;left:0;bottom:0;width:min(84vw,310px);height:100dvh;
+      transform:translateX(-100%);transition:transform .28s cubic-bezier(.2,.7,.2,1);
+    }
+    .rail.open{transform:none;box-shadow:0 0 40px rgba(31,26,24,.25)}
+    .burger{display:block}
+    .client-chip .who{display:none}
+  }
+  @media (max-width:560px){
+    .cols-2,.cols-3{grid-template-columns:1fr}
+    .temp-grid{grid-template-columns:1fr}
+    .view{padding-top:26px}
+    .reg-status{max-width:38%}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .rail,.node-drawer,.scrim,.nodrawer-scrim{transition:none}
+  }
+</style>
+
+<div class="shell">
+  <!-- NAVEGAÇÃO -->
+  <aside class="rail" id="rail">
+    <div class="brand">
+      <span class="mark">Business Core</span>
+      <span class="house">All Win Academy</span>
+      <span class="motto">Você é o seu maior patrimônio.</span>
+    </div>
+    <nav id="nav" aria-label="Áreas do programa"></nav>
+    <div class="rail-foot">
+      <span class="sig">Brindaremos.</span>
+      <span class="tiny">Consultoria Business Core</span>
+    </div>
+  </aside>
+
+  <!-- CONTEÚDO -->
+  <main>
+    <header class="topbar">
+      <div class="tb-left">
+        <button class="burger" id="burger" aria-label="Abrir navegação" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/></svg>
+        </button>
+        <div class="tb-title">
+          <span class="eyebrow" id="tb-eyebrow">Área</span>
+          <h1 id="tb-title">Visão geral</h1>
+        </div>
+      </div>
+      <div class="client-chip">
+        <span class="av" id="chip-av">CR</span>
+        <span class="who"><b id="chip-name">Cristiane</b><span id="chip-sub">Regenerys</span></span>
+      </div>
+    </header>
+
+    <!-- VISÃO GERAL -->
+    <section class="view" id="view-visao" aria-labelledby="h-visao">
+      <div class="view-head">
+        <span class="eyebrow">Acompanhamento desde <span id="og-inicio"></span></span>
+        <h2 id="h-visao">Visão geral</h2>
+        <p class="sub" id="og-clientline"></p>
+      </div>
+
+      <div class="grid cols-2" style="align-items:stretch">
+        <div class="hero-meta">
+          <span class="label">Meta principal</span>
+          <span class="fig" id="og-meta"></span>
+          <span class="note" id="og-meta-note"></span>
+        </div>
+        <div class="panel lead" style="display:flex;flex-direction:column;justify-content:center;gap:9px">
+          <span class="label">Momento atual</span>
+          <span class="value" id="og-momento" style="font-family:var(--serif);font-size:21px;color:var(--vinho-texto)"></span>
+          <span class="note-soft" id="og-momento-note"></span>
+        </div>
+      </div>
+
+      <h3 class="section-title">Direção do trabalho</h3>
+      <div class="grid cols-3">
+        <div class="panel"><span class="label">Propósito da meta</span><div class="value" id="og-proposito"></div></div>
+        <div class="panel"><span class="label">Prioridade comportamental</span><div class="value" id="og-pc"></div></div>
+        <div class="panel"><span class="label">Prioridade empresarial</span><div class="value" id="og-pe"></div></div>
+      </div>
+
+      <h3 class="section-title">Próximos passos</h3>
+      <div class="grid cols-2" style="align-items:stretch">
+        <div class="panel"><span class="label">Próxima ação</span><div class="value" id="og-proxima"></div></div>
+        <div class="panel">
+          <span class="label">Progresso das metas</span>
+          <div class="value" id="og-progresso"></div>
+          <div class="meter" aria-hidden="true"><i id="og-progresso-bar"></i></div>
+        </div>
+      </div>
+
+      <h3 class="section-title">Atividades recentes</h3>
+      <div class="panel" style="padding:24px">
+        <div class="timeline" id="og-atividades"></div>
+      </div>
+    </section>
+
+    <!-- COMPORTAMENTO -->
+    <section class="view" id="view-comportamento" hidden aria-labelledby="h-comp">
+      <div class="view-head">
+        <span class="eyebrow">Módulo comportamental</span>
+        <h2 id="h-comp">Comportamento</h2>
+        <p class="sub">Este é o mapa de como você funciona por dentro. Tudo aqui é hipótese de trabalho e observação do nosso acompanhamento, nunca um diagnóstico fechado nem um rótulo para sempre. Você explora, se reconhece e registra o que for sentindo.</p>
+        <div class="persist-note">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01" stroke-linecap="round"/></svg>
+          <span>Suas anotações ficam salvas apenas neste navegador por enquanto. A conexão com o seu perfil, para a consultora acompanhar, chega numa próxima etapa.</span>
+        </div>
+      </div>
+
+      <div class="subtabs" id="comp-subtabs" role="tablist" aria-label="Módulos de comportamento"></div>
+
+      <!-- A. Temperamentos -->
+      <div class="submodule" id="sub-temperamentos" role="tabpanel">
+        <p class="mod-intro">Dois temperamentos conversam dentro de você. Um te move, o outro te dá profundidade. Entender os dois ajuda a saber quando eles te impulsionam e quando te travam.</p>
+        <div class="temp-grid" id="temp-grid"></div>
+        <div class="inter" id="temp-inter"></div>
+      </div>
+
+      <!-- B. Bloqueios e padrões -->
+      <div class="submodule" id="sub-bloqueios" role="tabpanel" hidden>
+        <p class="mod-intro">As estratégias que você criou para se proteger já te serviram muito. Aqui a gente olha com carinho para elas e para os padrões que vale investigar, um de cada vez. Abra cada um e registre o que reconhece.</p>
+        <div id="bloqueios-list"></div>
+        <h3 class="section-title">Padrões a investigar juntas</h3>
+        <div class="node-items" id="bloqueios-padroes" style="padding:0"></div>
+      </div>
+
+      <!-- C. Crenças e narrativas -->
+      <div class="submodule" id="sub-crencas" role="tabpanel" hidden>
+        <p class="mod-intro">As frases que você escutou viraram histórias que você conta sobre si. Elas não são verdades, são hipóteses que dá para reescrever. Comece pela narrativa de origem.</p>
+        <div class="read" id="crenca-origem" style="border-left:3px solid var(--k-relatado);margin-bottom:18px"></div>
+        <h3 class="section-title">Crenças a investigar</h3>
+        <div id="crencas-list"></div>
+      </div>
+
+      <!-- D. Comportamentos observados -->
+      <div class="submodule" id="sub-observados" role="tabpanel" hidden>
+        <p class="mod-intro">O que a gente tem visto acontecer no concreto, no seu negócio e na sua rotina. Nomear sem julgamento é o primeiro passo para escolher uma resposta nova.</p>
+        <div id="observados-list"></div>
+      </div>
+
+      <!-- E. Exercícios de desenvolvimento -->
+      <div class="submodule" id="sub-exercicios" role="tabpanel" hidden>
+        <p class="mod-intro">Treinos pequenos e repetidos, para o seu corpo aprender que agir voltou a ser seguro. Escolha um por vez e registre como foi.</p>
+        <div class="stack" id="exercicios-list"></div>
+      </div>
+
+      <!-- F. Organograma -->
+      <div class="submodule" id="sub-organograma" role="tabpanel" hidden>
+        <p class="mod-intro">O caminho que desenhamos juntas, da narrativa de origem até o resultado que você quer. Toque em cada nó para ver os detalhes e registrar o que sentir.</p>
+        <div class="legend" id="org-legend"></div>
+        <div class="org-controls">
+          <button class="org-btn" id="org-expand" type="button">Expandir tudo</button>
+          <button class="org-btn" id="org-collapse" type="button">Recolher tudo</button>
+        </div>
+        <p class="org-disc">As conexões mostram um caminho de leitura entre os pontos, não causas comprovadas.</p>
+        <div class="org" id="org-map"></div>
+      </div>
+    </section>
+
+    <!-- CLAREZA -->
+    <section class="view" id="view-clareza" hidden aria-labelledby="h-clareza">
+      <div class="view-head">
+        <span class="eyebrow">Módulo de clareza</span>
+        <h2 id="h-clareza">Clareza</h2>
+        <p class="sub">A sua meta caminha por três chaves, Clareza, Decisão e Comportamento. É o fio que transforma o seu desejo em caminho possível.</p>
+      </div>
+      <div class="grid cols-3" id="clareza-cards"></div>
+      <h3 class="section-title">Crença central a ressignificar</h3>
+      <div class="read" id="clareza-crenca"></div>
+    </section>
+
+    <!-- EMPRESA -->
+    <section class="view" id="view-empresa" hidden aria-labelledby="h-emp">
+      <div class="view-head">
+        <span class="eyebrow">Módulo empresarial</span>
+        <h2 id="h-emp">Empresa</h2>
+        <p class="sub">A maturidade do seu negócio cresce por degraus. Cada fase pede um foco, e o movimento respeita o seu tempo de estruturação.</p>
+      </div>
+      <div class="ladder" id="emp-ladder"></div>
+      <h3 class="section-title">Onde a Regenerys está hoje</h3>
+      <div class="grid cols-2">
+        <div class="read"><span class="k">Já construído</span><p id="emp-forte"></p></div>
+        <div class="read"><span class="k">Em construção</span><p id="emp-obra"></p></div>
+      </div>
+    </section>
+
+    <!-- METAS E EXECUÇÃO -->
+    <section class="view" id="view-metas" hidden aria-labelledby="h-metas">
+      <div class="view-head">
+        <span class="eyebrow">Módulo de execução</span>
+        <h2 id="h-metas">Metas e execução</h2>
+        <p class="sub">Em breve, este é o seu lugar de metas semestrais, tarefas e checklists que acompanham cada conclusão sua. Por enquanto, o mapa da sua direção já está desenhado.</p>
+        <div style="margin-top:14px"><span class="soon">Tarefas interativas na próxima etapa</span></div>
+      </div>
+      <h3 class="section-title">Mapa dos semestres</h3>
+      <div class="grid" id="metas-sems" style="gap:16px"></div>
+      <p class="note-soft" style="margin-top:16px">Os valores são objetivos de planejamento, não promessas de resultado, e se ajustam ao seu ritmo real.</p>
+    </section>
+
+    <!-- HISTÓRICO -->
+    <section class="view" id="view-historico" hidden aria-labelledby="h-hist">
+      <div class="view-head">
+        <span class="eyebrow">Registro</span>
+        <h2 id="h-hist">Histórico de evolução</h2>
+        <p class="sub">A linha do tempo do seu acompanhamento. Cada sessão e cada marco ficam registrados aqui, para você enxergar o quanto já caminhou.</p>
+      </div>
+      <div class="panel" style="padding:26px">
+        <div class="timeline" id="hist-timeline"></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- drawer de detalhe do organograma -->
+<div class="node-drawer" id="node-drawer" role="dialog" aria-modal="true" aria-labelledby="nd-title" aria-hidden="true">
+  <div class="nd-head">
+    <div class="nd-meta">
+      <div class="node-tagrow"><span class="node-kind" id="nd-kind"></span><span class="node-level" id="nd-level"></span></div>
+      <h3 class="nd-title" id="nd-title"></h3>
+    </div>
+    <button class="nd-close" id="nd-close" aria-label="Fechar">&times;</button>
+  </div>
+  <div class="nd-body">
+    <div class="nd-sec"><span class="k">O que é</span><p id="nd-detalhe"></p></div>
+    <div class="nd-sec" id="nd-itens-sec"><span class="k">Pontos deste nó</span><div class="nd-chips" id="nd-chips"></div></div>
+    <div class="nd-sec" id="nd-link-sec"><span class="k">Para onde leva</span><div class="nd-link"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="nd-leva"></span></div></div>
+    <div class="nd-sec">
+      <span class="k">Minha observação</span>
+      <div class="fld"><textarea id="nd-obs" placeholder="O que esse ponto desperta em você? Escreva com as suas palavras."></textarea></div>
+    </div>
+  </div>
+</div>
+<div class="nodrawer-scrim" id="nd-scrim"></div>
+<div class="scrim" id="scrim"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ============================================================
+     DADOS DA CLIENTE  (separados da estrutura visual)
+     Para um novo cliente, basta duplicar e trocar este objeto.
+     ============================================================ */
+  var client = {
+    nome:"Cristiane Bérgamo Ronda",
+    primeiro:"Cristiane",
+    empresa:"Regenerys",
+    programa:"Consultoria Business Core",
+    iniciais:"CR",
+    chave:"cristiane",
+    inicio:"outubro de 2026",
+    meta:"R$ 40.000 / mês",
+    metaNota:"A sua autonomia e a sua paz, com liberdade de ir e vir.",
+    momento:"Sobrevivência e recomeço",
+    momentoNota:"Sua agenda em reconstrução depois de você recomeçar com a sua própria clínica.",
+    proposito:"Autonomia, liberdade e paz. Poder ir e vir sem precisar pedir, e baixar a guarda sabendo que as suas contas estão pagas.",
+    prioridadeComportamental:"Terminar o que você começa e se permitir ser vista, uma conclusão de cada vez.",
+    prioridadeEmpresarial:"Estruturar seus protocolos de alto valor e firmar o seu preço real, soltando a régua antiga.",
+    proximaAcao:"Publicar um dos vídeos que você gravou em setembro, sem regravar para buscar a perfeição.",
+    progresso:null,
+    atividades:[
+      {quando:"Outubro de 2026", titulo:"Sessão 02 — Suas metas pelo CDC", resumo:"Sua meta de R$ 40.000 ancorada em autonomia e paz. Mapeamos a sua trava de cobrança e o seu padrão de encolher."},
+      {quando:"Outubro de 2026", titulo:"Sessão 01 — Seu mapa comportamental", resumo:"Identificamos o seu temperamento, as suas feridas e as suas máscaras como base do acompanhamento."}
+    ],
+
+    /* ---- COMPORTAMENTO ---- */
+    comportamento:{
+      perfil:{
+        predominante:"Colérico",
+        secundaria:"Melancólica",
+        feridas:["Injustiça","Humilhação","Abandono"],
+        protecoes:["Controle","Perfeccionismo","Sacrifício","Agradar"],
+        investigar:["Adiamento","Dificuldade de exposição","Redução de preços por insegurança","Recolher-se diante da pressão"]
+      },
+      temperamentos:[
+        {role:"Predominante", nome:"Colérico",
+         desc:"O seu fogo. Lidera, decide, busca justiça e detesta ficar parada. É daqui que vem a sua coragem de recomeçar com a sua própria clínica.",
+         forcas:"Liderança, coragem, foco em resultado", sombra:"Impaciência, e a explosão quando passam do seu limite", idreg:"temp-colerico"},
+        {role:"Influência", nome:"Melancólica",
+         desc:"A sua profundidade. Capricha, sente fundo e quer fazer bem feito. É daqui que vem o seu cuidado e a sua excelência técnica.",
+         forcas:"Excelência, sensibilidade, lealdade", sombra:"Perfeccionismo que trava e autocrítica dura", idreg:"temp-melancolica"}
+      ],
+      interacao:"A sua colérica quer avançar agora, a sua melancólica quer garantir o perfeito antes. Quando as duas brigam, você congela no meio. Esse é o nó que viemos soltar.",
+      bloqueios:[
+        {id:"blo-controle", kind:"hipotese", titulo:"Controle", desc:"Segurar tudo para que nada saia do lugar. Protege, e também cansa quando você não consegue delegar nem confiar no processo."},
+        {id:"blo-perfeccionismo", kind:"hipotese", titulo:"Perfeccionismo", desc:"Buscar o impecável antes de entregar. Vira freio quando o perfeito adia o publicar, o cobrar e o concluir."},
+        {id:"blo-sacrificio", kind:"hipotese", titulo:"Sacrifício", desc:"Se doar além da conta e colocar você por último. Aparece quando trabalhar demais vira prova de valor."},
+        {id:"blo-agradar", kind:"hipotese", titulo:"Agradar", desc:"Cuidar de todos para se sentir amada e aceita. Dificulta dizer não e sustentar o seu preço sem culpa."}
+      ],
+      crencaOrigem:{titulo:"\"Eu sempre fui o problema da vida dela\"", texto:"A frase que você escutou da sua mãe e carregou como verdade sobre si mesma. É relatada por você, e é o ponto de partida de muita coisa que viemos desenhando. Não é verdade, é uma história que dá para reescrever."},
+      crencas:[
+        {id:"cre-termino", kind:"hipotese", titulo:"\"Não termino o que começo\"", desc:"Uma profecia que você repete sem perceber. Cada curso parado ou vídeo não publicado parece confirmar, e cada conclusão pequena prova o contrário."},
+        {id:"cre-valor", kind:"hipotese", titulo:"\"Só tenho valor quando sou excelente e útil\"", desc:"Amarra o seu valor ao desempenho. Enquanto isso for verdade para você, o perfeccionismo trabalha contra o seu descanso e o seu preço."}
+      ],
+      observados:[
+        {id:"obs-adiar", kind:"observacao", titulo:"Adiar publicações", desc:"Gravou em setembro e os vídeos seguem guardados. Aparecer é onde o medo de ser julgada mais pesa."},
+        {id:"obs-preco", kind:"observacao", titulo:"Reduzir preços por insegurança", desc:"Quando aperta, você faz promoção para não precisar pedir a ninguém. O preço baixo acaba confirmando a crença antiga."},
+        {id:"obs-exposicao", kind:"observacao", titulo:"Evitar exposição", desc:"Entrega inteira onde é dona, a mão no procedimento, e recua onde precisa ser vista."},
+        {id:"obs-recolher", kind:"observacao", titulo:"Recolher-se diante da pressão", desc:"Quando a tarefa cresce e o ambiente aperta, você encolhe e vai para a cama. É o freio antigo pedindo segurança."}
+      ],
+      exercicios:[
+        {id:"exc-concluir", titulo:"Concluir pequenas tarefas", como:"Escolha uma tarefa pequena e leve até o fim, mesmo imperfeita. <b>Cada conclusão é uma pedra sobre o \"não termino o que começo\".</b>", destaque:false},
+        {id:"exc-exposicao", titulo:"Praticar exposição gradual", como:"Publicar um dos vídeos de setembro, sem regravar. <b>Treino de presença, não de perfeição.</b> É o seu micro-passo desta semana.", destaque:true},
+        {id:"exc-preco", titulo:"Sustentar preços com critérios", como:"Antes de baixar um valor, confira o seu critério de preço. <b>Sustentar o que vale é a sua forma de andar com as próprias pernas.</b>", destaque:false},
+        {id:"exc-autonomia", titulo:"Fortalecer a autonomia", como:"Tomar uma decisão pequena sem buscar aprovação. <b>Aos poucos, a sua voz passa a mandar mais que a voz antiga.</b>", destaque:false}
+      ],
+      mapa:[
+        {id:"n1", kind:"relatado", level:"Narrativa de origem",
+         titulo:"\"Eu sempre fui o problema da vida dela\"",
+         itens:[],
+         detalhe:"A frase que você escutou da sua mãe e carregou como verdade sobre si. É o ponto de partida relatado por você. Daqui nasce muito do que viemos olhando juntas.",
+         leva:"Dessa narrativa nascem os significados que você deu às suas experiências."},
+        {id:"n2", kind:"hipotese", level:"Experiências e significados",
+         titulo:"Injustiça, humilhação e abandono",
+         itens:["Injustiça","Humilhação","Abandono"],
+         detalhe:"As marcas que percebemos no acompanhamento. Entram como hipóteses de trabalho, não como rótulos fixos sobre você.",
+         leva:"Para se proteger dessas dores, você criou estratégias."},
+        {id:"n3", kind:"hipotese", level:"Estratégias de proteção",
+         titulo:"Controle, perfeccionismo, sacrifício e agradar",
+         itens:["Controle","Perfeccionismo","Sacrifício","Agradar"],
+         detalhe:"Formas que você encontrou de se manter segura. Já te serviram muito, e agora vamos olhar quando elas pesam.",
+         leva:"Com o tempo, essas estratégias viraram crenças sobre você."},
+        {id:"n4", kind:"hipotese", level:"Crenças a investigar",
+         titulo:"\"Não termino o que começo\" e \"Só tenho valor sendo excelente e útil\"",
+         itens:["Não termino o que começo","Só tenho valor sendo excelente e útil"],
+         detalhe:"Frases que ainda guiam escolhas suas. São hipóteses para investigar juntas, nunca sentenças.",
+         leva:"Essas crenças aparecem no seu dia a dia através de comportamentos."},
+        {id:"n5", kind:"observacao", level:"Comportamentos atuais",
+         titulo:"Adiar, reduzir preços, evitar exposição e se recolher",
+         itens:["Adiar publicações","Reduzir preços por insegurança","Evitar exposição","Recolher-se na pressão"],
+         detalhe:"O que observamos acontecendo agora, no concreto do seu negócio e da sua rotina.",
+         leva:"Esses comportamentos têm reflexo no seu negócio."},
+        {id:"n6", kind:"hipotese", level:"Possíveis impactos empresariais",
+         titulo:"Menos consistência, preço frágil e oportunidades adiadas",
+         itens:["Menor consistência de conteúdo","Dificuldade de sustentar preços","Oportunidades comerciais adiadas"],
+         detalhe:"Hipóteses de como esses padrões podem estar afetando o caixa e o crescimento da Regenerys.",
+         leva:"A boa notícia é que há direções claras de desenvolvimento."},
+        {id:"n7", kind:"acao", level:"Direções de desenvolvimento",
+         titulo:"Concluir, aparecer, sustentar preço e fortalecer autonomia",
+         itens:["Concluir pequenas tarefas","Exposição gradual","Sustentar preços com critérios","Fortalecer a autonomia"],
+         detalhe:"Os caminhos de treino. Pequenos e repetidos, para o seu corpo aprender que agir é seguro.",
+         leva:"Cada passo te aproxima do que você quer."},
+        {id:"n8", kind:"acao", level:"Resultado desejado",
+         titulo:"Autonomia, previsibilidade e a sua meta",
+         itens:["Autonomia","Previsibilidade financeira","Aproximação de R$ 40.000 / mês"],
+         detalhe:"Onde tudo isso leva. A liberdade que você descreveu, do seu jeito e no seu tempo.",
+         leva:""}
+      ]
+    },
+
+    clareza:{
+      cards:[
+        {k:"Clareza", titulo:"A sua meta tem nome", texto:"R$ 40.000 por mês significam a sua autonomia, o seu direito de ir e vir, e paz para você baixar a guarda."},
+        {k:"Decisão", titulo:"O seu ponto de virada", texto:"Cobrar o seu valor verdadeiro e parar de se baratear para não precisar pedir a ninguém."},
+        {k:"Comportamento", titulo:"O padrão a interromper", texto:"Quando o medo aperta, você encolhe e busca a perfeição. Reconhecer isso é o seu primeiro movimento de liberdade."}
+      ],
+      crenca:{atual:"Eu só tenho valor quando sou excelente e útil.", nova:"Meu valor existe antes de qualquer entrega. Cobrar o que valho é o meu primeiro passo de andar com as minhas pernas."}
+    },
+    empresa:{
+      estagios:[
+        {nome:"Sobrevivência", estado:"atual"},
+        {nome:"Organização", estado:"futuro"},
+        {nome:"Previsibilidade", estado:"futuro"},
+        {nome:"Escala", estado:"futuro"},
+        {nome:"Autoridade consolidada", estado:"futuro"}
+      ],
+      forte:"Sua marca própria com os protocolos Regen, o seu repertório técnico amplo e o conteúdo que já educa e posiciona.",
+      obra:"A estrutura que permite você cobrar com firmeza, aparecer sem medo e concluir o que começa."
+    },
+    semestres:[
+      {per:"out/2026 a abr/2027", dir:"Sobrevivência para organização", marco:"R$ 5.000 a R$ 8.000 / mês",
+       itens:["Estruturar seus protocolos de alto valor","Revisar os seus preços","Publicar conteúdo com consistência"]},
+      {per:"mai/2027 a out/2027", dir:"Organização para previsibilidade", marco:"R$ 12.000 a R$ 20.000 / mês",
+       itens:["Estruturar captação e acompanhamento comercial","Desenvolver recorrência na sua agenda","Fortalecer a sua autonomia nas decisões"]},
+      {per:"nov/2027 a abr/2028", dir:"Previsibilidade para escala", marco:"Aproximação de R$ 40.000 / mês",
+       itens:["Estruturar os seus processos","Avaliar equipe e capacidade operacional","Consolidar o seu posicionamento e ticket"]}
+    ],
+    historico:[
+      {quando:"Outubro de 2026", titulo:"Sessão 02 — Suas metas pelo CDC", resumo:"Trabalhamos a sua meta semestral. Clareza, Decisão e Comportamento mapeados, com a sua trava de cobrança identificada."},
+      {quando:"Outubro de 2026", titulo:"Sessão 01 — Seu mapa comportamental", resumo:"Seu temperamento, feridas e máscaras registrados como base do acompanhamento."},
+      {quando:"Outubro de 2026", titulo:"Início do seu acompanhamento", resumo:"Sua entrada na Consultoria Business Core, vinda da leitura empresarial da Regenerys."}
+    ]
+  };
+
+  /* constantes comportamento */
+  var STATES=["Ainda não reconheço","Estou observando","Reconheço o padrão","Estou praticando uma nova resposta"];
+  var EXC_STATES=["A definir","Praticando","Consolidando"];
+  var KIND_LABEL={relatado:"Relatado",hipotese:"Hipótese",observacao:"Observação",acao:"Ação"};
+  var KIND_VAR={relatado:"var(--k-relatado)",hipotese:"var(--k-hipotese)",observacao:"var(--k-observacao)",acao:"var(--k-acao)"};
+  var QUESTIONS=[
+    {k:"q1", t:"O que reconheço em mim?"},
+    {k:"q2", t:"Em quais situações isso acontece?"},
+    {k:"q3", t:"Como costumo reagir?"},
+    {k:"q4", t:"O que gostaria de fazer diferente?"},
+    {k:"q5", t:"Qual ação vou praticar?"},
+    {k:"q6", t:"Quando vou revisar essa ação?"}
+  ];
+
+  function el(id){return document.getElementById(id);}
+  function na(v){return (v===null||v===undefined||v==="")?'<span class="na">Ainda não registrado</span>':v;}
+  function esc(s){var d=document.createElement("div");d.textContent=s;return d.innerHTML;}
+
+  /* ---------- armazenamento local (por cliente) ---------- */
+  var NS="bc."+client.chave+".v1.";
+  function load(key){try{var v=localStorage.getItem(NS+key);return v==null?null:JSON.parse(v);}catch(e){return null;}}
+  function save(key,val){try{localStorage.setItem(NS+key,JSON.stringify(val));}catch(e){}}
+  var debounces={};
+  function saveSoon(key,val){clearTimeout(debounces[key]);debounces[key]=setTimeout(function(){save(key,val);},350);}
+
+  /* ============================================================
+     NAVEGAÇÃO PRINCIPAL
+     ============================================================ */
+  var VIEWS=[
+    {id:"visao",       label:"Visão geral"},
+    {id:"comportamento",label:"Comportamento"},
+    {id:"clareza",     label:"Clareza"},
+    {id:"empresa",     label:"Empresa"},
+    {id:"metas",       label:"Metas e execução"},
+    {id:"historico",   label:"Histórico de evolução"}
+  ];
+  var nav=el("nav");
+  VIEWS.forEach(function(v,i){
+    var b=document.createElement("button");
+    b.className="nav-item";b.type="button";b.dataset.view=v.id;
+    b.innerHTML='<span class="idx">'+String(i+1).padStart(2,"0")+'</span><span>'+esc(v.label)+'</span>';
+    b.addEventListener("click",function(){go(v.id);closeDrawer();});
+    nav.appendChild(b);
+  });
+  function go(id){
+    var v=VIEWS.find(function(x){return x.id===id;})||VIEWS[0];
+    VIEWS.forEach(function(x){el("view-"+x.id).hidden=(x.id!==v.id);});
+    Array.prototype.forEach.call(nav.children,function(btn){
+      if(btn.dataset.view===v.id){btn.setAttribute("aria-current","page");}else{btn.removeAttribute("aria-current");}
+    });
+    var idx=VIEWS.indexOf(v)+1;
+    el("tb-eyebrow").textContent="Área "+String(idx).padStart(2,"0")+" de 06";
+    el("tb-title").textContent=v.label;
+    try{history.replaceState(null,"","#"+v.id);}catch(e){}
+    window.scrollTo(0,0);
+  }
+
+  /* ---------- gaveta (celular) ---------- */
+  var rail=el("rail"),scrim=el("scrim"),burger=el("burger");
+  function openDrawer(){rail.classList.add("open");scrim.classList.add("show");burger.setAttribute("aria-expanded","true");}
+  function closeDrawer(){rail.classList.remove("open");scrim.classList.remove("show");burger.setAttribute("aria-expanded","false");}
+  burger.addEventListener("click",function(){rail.classList.contains("open")?closeDrawer():openDrawer();});
+  scrim.addEventListener("click",closeDrawer);
+  document.addEventListener("keydown",function(e){if(e.key==="Escape"){closeDrawer();closeNode();}});
+
+  /* ============================================================
+     RENDER DAS OUTRAS ÁREAS
+     ============================================================ */
+  function tlRow(a){
+    return '<div class="tl-item"><div class="tl-dot"><span class="d"></span><span class="line"></span></div>'+
+      '<div class="tl-body"><span class="when">'+esc(a.quando)+'</span><h4>'+esc(a.titulo)+'</h4>'+
+      (a.resumo?'<p>'+esc(a.resumo)+'</p>':'')+'</div></div>';
+  }
+  function renderStatic(c){
+    el("chip-av").textContent=c.iniciais;
+    el("chip-name").textContent=c.primeiro;
+    el("chip-sub").textContent=c.empresa;
+
+    el("og-inicio").textContent=c.inicio;
+    el("og-clientline").textContent=c.nome+", este é o seu espaço na "+c.programa+". "+c.empresa+".";
+    el("og-meta").textContent=c.meta;
+    el("og-meta-note").textContent=c.metaNota;
+    el("og-momento").innerHTML=na(c.momento);
+    el("og-momento-note").textContent=c.momentoNota||"";
+    el("og-proposito").innerHTML=na(c.proposito);
+    el("og-pc").innerHTML=na(c.prioridadeComportamental);
+    el("og-pe").innerHTML=na(c.prioridadeEmpresarial);
+    el("og-proxima").innerHTML=na(c.proximaAcao);
+    if(c.progresso===null||c.progresso===undefined){el("og-progresso").innerHTML=na(null);el("og-progresso-bar").style.width="0";}
+    else{el("og-progresso").textContent=c.progresso+"%";el("og-progresso-bar").style.width=Math.max(0,Math.min(100,c.progresso))+"%";}
+    el("og-atividades").innerHTML=c.atividades.map(tlRow).join("");
+
+    el("clareza-cards").innerHTML=c.clareza.cards.map(function(x){
+      return '<div class="read"><span class="k">'+esc(x.k)+'</span><h4>'+esc(x.titulo)+'</h4><p>'+esc(x.texto)+'</p></div>';
+    }).join("");
+    el("clareza-crenca").innerHTML=
+      '<span class="k">Crença de hoje</span><p style="color:var(--muted)">'+esc(c.clareza.crenca.atual)+'</p>'+
+      '<span class="k" style="margin-top:10px">Crença a construir</span><h4 style="font-size:19px;color:var(--vinho-texto)">'+esc(c.clareza.crenca.nova)+'</h4>';
+
+    el("emp-ladder").innerHTML=c.empresa.estagios.map(function(s,i){
+      var cls="rung "+(s.estado==="atual"?"atual":"futuro");
+      var tag=s.estado==="atual"?'<span class="tag">Fase atual</span>':"";
+      return '<div class="'+cls+'"><span class="n">'+String(i+1).padStart(2,"0")+'</span><span class="nm">'+esc(s.nome)+'</span>'+tag+'</div>';
+    }).join("");
+    el("emp-forte").textContent=c.empresa.forte;
+    el("emp-obra").textContent=c.empresa.obra;
+
+    el("metas-sems").innerHTML=c.semestres.map(function(s,i){
+      return '<div class="sem"><div class="top"><span class="per">Semestre '+(i+1)+' · '+esc(s.per)+'</span><span class="marco">'+esc(s.marco)+'</span></div>'+
+        '<h4>'+esc(s.dir)+'</h4>'+
+        '<ul>'+s.itens.map(function(it){return '<li>'+esc(it)+'</li>';}).join("")+'</ul></div>';
+    }).join("");
+
+    el("hist-timeline").innerHTML=c.historico.map(tlRow).join("");
+  }
+
+  /* ============================================================
+     COMPORTAMENTO
+     ============================================================ */
+  var CB=client.comportamento;
+
+  /* sub-navegação */
+  var SUBS=[
+    {id:"temperamentos", ltr:"A", label:"Temperamentos"},
+    {id:"bloqueios",     ltr:"B", label:"Bloqueios e padrões"},
+    {id:"crencas",       ltr:"C", label:"Crenças e narrativas"},
+    {id:"observados",    ltr:"D", label:"Comportamentos observados"},
+    {id:"exercicios",    ltr:"E", label:"Exercícios de desenvolvimento"},
+    {id:"organograma",   ltr:"F", label:"Organograma do funcionamento"}
+  ];
+  var subtabs=el("comp-subtabs");
+  SUBS.forEach(function(s,i){
+    var b=document.createElement("button");
+    b.className="subtab";b.type="button";b.setAttribute("role","tab");b.dataset.sub=s.id;
+    b.innerHTML='<span class="ltr">'+s.ltr+'</span><span>'+esc(s.label)+'</span>';
+    b.addEventListener("click",function(){goSub(s.id);});
+    subtabs.appendChild(b);
+  });
+  function goSub(id){
+    SUBS.forEach(function(s){
+      el("sub-"+s.id).hidden=(s.id!==id);
+    });
+    Array.prototype.forEach.call(subtabs.children,function(btn){
+      btn.setAttribute("aria-selected", btn.dataset.sub===id?"true":"false");
+    });
+  }
+
+  /* registro individual reutilizável */
+  function buildRegistro(r){
+    var saved=load(r.id)||{};
+    var st=typeof saved.status==="number"?saved.status:0;
+    var art=document.createElement("article");
+    art.className="reg";art.dataset.reg=r.id;
+    art.style.setProperty("--kcolor",KIND_VAR[r.kind]);
+    var head=document.createElement("button");
+    head.className="reg-head";head.type="button";head.setAttribute("aria-expanded","false");
+    head.innerHTML=
+      '<span class="reg-kind">'+esc(KIND_LABEL[r.kind])+'</span>'+
+      '<span class="reg-title">'+esc(r.titulo)+'</span>'+
+      '<span class="reg-status">'+esc(STATES[st])+'</span>'+
+      '<svg class="reg-chev" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    var body=document.createElement("div");
+    body.className="reg-body";body.hidden=true;
+    var segHTML='<div><div class="mini-label">Onde estou com isso</div><div class="seg" role="group" aria-label="Estado de acompanhamento">'+
+      STATES.map(function(s,i){return '<button class="seg-btn" type="button" data-v="'+i+'" aria-pressed="'+(i===st)+'">'+esc(s)+'</button>';}).join("")+
+      '</div></div>';
+    var fieldsHTML='<div class="fieldset">'+QUESTIONS.map(function(q){
+      var val=saved[q.k]||"";
+      if(q.k==="q6"){
+        return '<div class="fld"><label for="'+r.id+'-'+q.k+'">'+esc(q.t)+'</label><input id="'+r.id+'-'+q.k+'" type="text" data-q="'+q.k+'" value="'+esc(val)+'" placeholder="Ex: em 15 dias, na próxima sessão"></div>';
+      }
+      return '<div class="fld"><label for="'+r.id+'-'+q.k+'">'+esc(q.t)+'</label><textarea id="'+r.id+'-'+q.k+'" data-q="'+q.k+'" placeholder="Escreva com as suas palavras.">'+esc(val)+'</textarea></div>';
+    }).join("")+'</div>';
+    body.innerHTML='<p class="reg-desc">'+esc(r.desc)+'</p>'+segHTML+fieldsHTML;
+
+    head.addEventListener("click",function(){
+      var open=head.getAttribute("aria-expanded")==="true";
+      head.setAttribute("aria-expanded",String(!open));body.hidden=open;
+    });
+    // status
+    body.querySelectorAll(".seg-btn").forEach(function(sb){
+      sb.addEventListener("click",function(){
+        var v=parseInt(sb.dataset.v,10);
+        body.querySelectorAll(".seg-btn").forEach(function(o){o.setAttribute("aria-pressed",String(parseInt(o.dataset.v,10)===v));});
+        head.querySelector(".reg-status").textContent=STATES[v];
+        var cur=load(r.id)||{};cur.status=v;save(r.id,cur);
+      });
+    });
+    // textos
+    body.querySelectorAll("[data-q]").forEach(function(inp){
+      inp.addEventListener("input",function(){
+        var cur=load(r.id)||{};cur[inp.dataset.q]=inp.value;saveSoon(r.id,cur);
+      });
+    });
+    art.appendChild(head);art.appendChild(body);
+    return art;
+  }
+
+  function renderComportamento(){
+    // A — temperamentos
+    el("temp-grid").innerHTML=CB.temperamentos.map(function(t,i){
+      return '<div class="temp-card'+(i>0?' second':'')+'">'+
+        '<div class="tt"><h4>'+esc(t.nome)+'</h4><span class="role">'+esc(t.role)+'</span></div>'+
+        '<p class="desc">'+esc(t.desc)+'</p>'+
+        '<div class="temp-dl">'+
+          '<div class="row"><b>Forças</b><span>'+esc(t.forcas)+'</span></div>'+
+          '<div class="row"><b>Sombra</b><span>'+esc(t.sombra)+'</span></div>'+
+        '</div>'+
+        '<div class="fld" style="margin-top:4px"><div class="mini-label">Minha observação</div>'+
+          '<textarea data-obs="'+t.idreg+'" placeholder="O que desse temperamento você reconhece em você?"></textarea></div>'+
+      '</div>';
+    }).join("");
+    el("temp-inter").innerHTML='<span class="k">O nó entre os dois</span><p>'+esc(CB.interacao)+'</p>';
+
+    // B — bloqueios
+    var bl=el("bloqueios-list");bl.innerHTML="";
+    CB.bloqueios.forEach(function(r){bl.appendChild(buildRegistro(r));});
+    el("bloqueios-padroes").innerHTML=CB.perfil.investigar.map(function(p){return '<span class="chip">'+esc(p)+'</span>';}).join("");
+
+    // C — crenças
+    el("crenca-origem").innerHTML='<span class="k">Narrativa de origem (relatada por você)</span>'+
+      '<h4>'+esc(CB.crencaOrigem.titulo)+'</h4><p>'+esc(CB.crencaOrigem.texto)+'</p>';
+    var cl=el("crencas-list");cl.innerHTML="";
+    CB.crencas.forEach(function(r){cl.appendChild(buildRegistro(r));});
+
+    // D — observados
+    var ol=el("observados-list");ol.innerHTML="";
+    CB.observados.forEach(function(r){ol.appendChild(buildRegistro(r));});
+
+    // E — exercícios
+    el("exercicios-list").innerHTML=CB.exercicios.map(function(e){
+      var saved=load(e.id)||{};var est=typeof saved.status==="number"?saved.status:0;
+      return '<div class="exc'+(e.destaque?' destaque':'')+'" data-exc="'+e.id+'">'+
+        '<div class="top"><h4>'+esc(e.titulo)+'</h4>'+(e.destaque?'<span class="flag">Micro-passo da semana</span>':'')+'</div>'+
+        '<p class="como">'+e.como+'</p>'+
+        '<div><div class="mini-label">Onde estou com esse treino</div><div class="seg" role="group" aria-label="Status do exercício">'+
+          EXC_STATES.map(function(s,i){return '<button class="seg-btn" type="button" data-exc-v="'+i+'" aria-pressed="'+(i===est)+'">'+esc(s)+'</button>';}).join("")+
+        '</div></div>'+
+        '<div class="fld"><div class="mini-label">Como foi quando pratiquei</div><textarea data-exc-note="'+e.id+'" placeholder="Registre a sua experiência com esse treino."></textarea></div>'+
+      '</div>';
+    }).join("");
+
+    // observações salvas (temperamentos + exercícios): popular valores
+    document.querySelectorAll("[data-obs]").forEach(function(t){
+      var s=load("obs."+t.dataset.obs);if(s&&s.text)t.value=s.text;
+      t.addEventListener("input",function(){saveSoon("obs."+t.dataset.obs,{text:t.value});});
+    });
+    document.querySelectorAll("[data-exc-note]").forEach(function(t){
+      var s=load(t.dataset.excNote);if(s&&s.note)t.value=s.note;
+      t.addEventListener("input",function(){var cur=load(t.dataset.excNote)||{};cur.note=t.value;saveSoon(t.dataset.excNote,cur);});
+    });
+    document.querySelectorAll("[data-exc]").forEach(function(card){
+      card.querySelectorAll("[data-exc-v]").forEach(function(sb){
+        sb.addEventListener("click",function(){
+          var v=parseInt(sb.dataset.excV,10);var id=card.dataset.exc;
+          card.querySelectorAll("[data-exc-v]").forEach(function(o){o.setAttribute("aria-pressed",String(parseInt(o.dataset.excV,10)===v));});
+          var cur=load(id)||{};cur.status=v;save(id,cur);
+        });
+      });
+    });
+
+    // F — organograma
+    renderMap();
+    goSub("temperamentos");
+  }
+
+  /* ---------- organograma ---------- */
+  function renderMap(){
+    el("org-legend").innerHTML=["relatado","hipotese","observacao","acao"].map(function(k){
+      return '<span class="lg"><span class="dot" style="background:'+KIND_VAR[k]+'"></span>'+esc(KIND_LABEL[k])+'</span>';
+    }).join("");
+    var map=el("org-map");map.innerHTML="";
+    CB.mapa.forEach(function(n,i){
+      var node=document.createElement("div");
+      node.className="node";node.dataset.node=n.id;node.dataset.open="true";
+      node.style.setProperty("--kcolor",KIND_VAR[n.kind]);
+      var hasObs=(load("node."+n.id)||{}).text;
+      var itemsHTML=n.itens.length?('<div class="node-items">'+n.itens.map(function(it){return '<span class="chip">'+esc(it)+'</span>';}).join("")+'</div>'):'<div class="node-mini">'+esc(n.detalhe)+'</div>';
+      node.innerHTML=
+        '<span class="node-knob"></span>'+
+        '<div class="node-card"><div class="node-main">'+
+          '<button class="node-open" type="button" aria-label="Abrir detalhes de '+esc(n.level)+'">'+
+            '<span class="node-tagrow"><span class="node-kind">'+esc(KIND_LABEL[n.kind])+'</span><span class="node-level">'+String(i+1).padStart(2,"0")+' · '+esc(n.level)+'</span>'+
+              '<span class="node-saved'+(hasObs?' on':'')+'" data-saved="'+n.id+'">● anotado</span></span>'+
+            '<span class="node-title">'+esc(n.titulo)+'</span>'+
+          '</button>'+
+          '<button class="node-chev" type="button" aria-label="Recolher ou expandir"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>'+
+        '</div>'+itemsHTML+'</div>';
+      node.querySelector(".node-open").addEventListener("click",function(){openNode(n);});
+      node.querySelector(".node-chev").addEventListener("click",function(){
+        node.dataset.open = node.dataset.open==="true"?"false":"true";
+      });
+      map.appendChild(node);
+    });
+  }
+  el("org-expand").addEventListener("click",function(){document.querySelectorAll("#org-map .node").forEach(function(n){n.dataset.open="true";});});
+  el("org-collapse").addEventListener("click",function(){document.querySelectorAll("#org-map .node").forEach(function(n){n.dataset.open="false";});});
+
+  /* drawer do nó */
+  var ndrawer=el("node-drawer"),ndscrim=el("nd-scrim"),ndObs=el("nd-obs"),curNode=null;
+  function openNode(n){
+    curNode=n;
+    el("nd-kind").textContent=KIND_LABEL[n.kind];
+    el("nd-kind").style.background=KIND_VAR[n.kind];
+    el("nd-level").textContent=n.level;
+    el("nd-title").textContent=n.titulo;
+    el("nd-detalhe").textContent=n.detalhe;
+    if(n.itens.length){el("nd-itens-sec").hidden=false;el("nd-chips").innerHTML=n.itens.map(function(it){return '<span class="chip">'+esc(it)+'</span>';}).join("");}
+    else{el("nd-itens-sec").hidden=true;}
+    if(n.leva){el("nd-link-sec").hidden=false;el("nd-leva").textContent=n.leva;}else{el("nd-link-sec").hidden=true;}
+    var s=load("node."+n.id);ndObs.value=(s&&s.text)||"";
+    ndrawer.classList.add("open");ndrawer.setAttribute("aria-hidden","false");ndscrim.classList.add("show");
+    setTimeout(function(){ndObs.focus();},260);
+  }
+  function closeNode(){
+    ndrawer.classList.remove("open");ndrawer.setAttribute("aria-hidden","true");ndscrim.classList.remove("show");curNode=null;
+  }
+  el("nd-close").addEventListener("click",closeNode);
+  ndscrim.addEventListener("click",closeNode);
+  ndObs.addEventListener("input",function(){
+    if(!curNode)return;
+    var id="node."+curNode.id;save(id,{text:ndObs.value});
+    var badge=document.querySelector('[data-saved="'+curNode.id+'"]');
+    if(badge){if(ndObs.value.trim()){badge.classList.add("on");}else{badge.classList.remove("on");}}
+  });
+
+  /* ============================================================
+     BOOT
+     ============================================================ */
+  renderStatic(client);
+  renderComportamento();
+
+  var start=(location.hash||"").replace("#","");
+  go(VIEWS.some(function(v){return v.id===start;})?start:"visao");
+  window.addEventListener("hashchange",function(){
+    var h=(location.hash||"").replace("#","");
+    if(VIEWS.some(function(v){return v.id===h;}))go(h);
+  });
+})();
+</script>
+</body></html>
