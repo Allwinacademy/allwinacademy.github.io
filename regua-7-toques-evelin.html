@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Régua dos 7 Toques · Unica Beauty</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,400;9..144,0,500;9..144,0,600;9..144,1,400;9..144,1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --creme:#FAF7F2;--creme2:#F3ECE3;--branco:#FFFFFF;--tinta:#1F1A18;
+    --vinho:#360000;--vinho-texto:#4E0D16;--ouro:#C9A15A;--verde:#2E5E4E;--marinho:#15294D;--madeira:#7E4C22;
+    --linha:rgba(78,13,22,0.14);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--creme);color:var(--tinta);font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:720px;margin:0 auto;padding:0 20px}
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif;font-weight:500;line-height:1.14;color:var(--vinho-texto)}
+  strong{font-weight:600;color:var(--vinho-texto)}
+  .eyebrow{color:var(--ouro);font-size:12px;letter-spacing:0.18em;text-transform:uppercase;font-weight:600;margin-bottom:12px}
+  section{padding:44px 0;border-bottom:1px solid var(--linha)}
+  h2.titulo{font-size:clamp(23px,6vw,34px);margin-bottom:14px}
+  .lead{font-size:1.02rem;max-width:60ch;margin-bottom:10px}
+
+  /* HERO */
+  .hero{background:var(--vinho);color:var(--creme);padding:64px 0 54px;text-align:center;border-bottom:none}
+  .hero .eyebrow{color:var(--ouro)}
+  .hero h1{color:var(--creme);font-size:clamp(32px,8.5vw,54px);font-weight:600}
+  .hero .peach{font-size:1.1em}
+  .hero .sub{font-family:'Fraunces',serif;font-style:italic;color:rgba(250,247,242,0.9);font-size:clamp(16px,4vw,21px);margin-top:10px}
+  .hero .para{margin-top:26px;font-size:11.5px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(201,161,90,0.85)}
+
+  /* JANELA */
+  .janela{background:#FBF4EE;border:1px solid #e3cdb2;border-radius:12px;padding:18px 22px;margin:28px 0 0;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .janela .jt{font-family:'Fraunces',serif;font-weight:600;color:var(--vinho-texto);font-size:1.1rem}
+  .janela .jd{font-size:.88rem;color:#5a4e46;max-width:42ch}
+  .janela .jbig{font-family:'Fraunces',serif;font-weight:600;color:var(--vinho);font-size:1.4rem;white-space:nowrap}
+
+  /* TOQUES */
+  .toque{display:grid;grid-template-columns:44px 1fr;gap:16px;padding:20px 0;border-top:1px solid var(--linha)}
+  .toque:first-of-type{border-top:none}
+  .toque .n{font-family:'Fraunces',serif;font-weight:600;color:var(--ouro);font-size:1.9rem;line-height:1}
+  .toque .tt{font-family:'Fraunces',serif;font-weight:600;color:var(--vinho-texto);font-size:1.2rem;margin-bottom:2px}
+  .toque .quando{font-size:.72rem;letter-spacing:0.05em;text-transform:uppercase;color:var(--madeira);margin-bottom:8px}
+  .toque .mood{font-size:.92rem;color:#5a4e46;font-style:italic;margin-bottom:10px}
+  .msg-wrap{position:relative}
+  .toque .msg{background:var(--creme);border:1px solid var(--linha);border-left:3px solid var(--ouro);border-radius:0 8px 8px 0;padding:12px 14px;font-size:.95rem;line-height:1.55;white-space:pre-wrap}
+  .copiar{margin-top:8px;border:1px solid var(--ouro);background:transparent;color:var(--vinho-texto);font-family:'Inter',sans-serif;font-size:.78rem;font-weight:600;padding:6px 14px;border-radius:30px;cursor:pointer;transition:all .2s}
+  .copiar:hover{background:var(--ouro);color:#fff}
+  .copiar.ok{background:var(--verde);border-color:var(--verde);color:#fff}
+
+  /* QUIETO */
+  .quieto{background:var(--verde);color:#EDF3EF;border-radius:12px;padding:26px 24px;margin:26px 0 0}
+  .quieto .eyebrow{color:#D8C9A0}
+  .quieto h3{color:#F4F8F5;font-size:1.3rem;margin-bottom:10px}
+  .quieto p{font-size:.96rem;color:#DCE7E1;line-height:1.6;margin-bottom:8px}
+  .quieto b{color:#F4F8F5}
+  .ritmo{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+  .rbloco{background:#FBF4EE;border:1px solid var(--linha);border-radius:10px;padding:14px}
+  .rbloco .rt{font-family:'Fraunces',serif;font-weight:600;color:var(--vinho-texto);font-size:.98rem;margin-bottom:4px}
+  .rbloco .rd{font-size:.84rem;color:#7a6a60;line-height:1.45}
+
+  /* METAS */
+  .metas{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:8px 0 10px}
+  .meta{border-radius:12px;padding:20px 16px;text-align:center}
+  .meta.dia{background:var(--branco);border:1px solid var(--linha)}
+  .meta.sem{background:#FBF4EE;border:1px solid #e3cdb2}
+  .meta.camp{background:var(--verde);color:#EDF3EF}
+  .meta .ml{font-size:11px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+  .meta.dia .ml,.meta.sem .ml{color:var(--madeira)}
+  .meta.camp .ml{color:#D8C9A0}
+  .meta .mv{font-family:'Fraunces',serif;font-weight:600;font-size:1.7rem;line-height:1.05}
+  .meta.dia .mv,.meta.sem .mv{color:var(--vinho-texto)}
+  .meta.camp .mv{color:var(--ouro)}
+  .meta .mp{font-size:.82rem;margin-top:6px;line-height:1.4}
+  .meta.dia .mp,.meta.sem .mp{color:#7a6a60}
+  .meta.camp .mp{color:#DCE7E1}
+  .meta-nota{font-size:.9rem;color:#5a4e46;font-style:italic;text-align:center;margin-top:4px}
+
+  /* CHECKLIST */
+  .bloco-dia{font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ouro);font-weight:600;margin:22px 0 10px}
+  .check{display:flex;align-items:flex-start;gap:12px;padding:13px 16px;border:1px solid var(--linha);border-radius:10px;margin-bottom:9px;background:var(--branco);cursor:pointer;transition:background .15s;user-select:none}
+  .check:hover{background:#FBF9F5}
+  .check .box{flex:0 0 20px;width:20px;height:20px;border:2px solid var(--madeira);border-radius:5px;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+  .check .box svg{width:12px;height:12px;opacity:0;transition:opacity .15s}
+  .check.done .box{background:var(--verde);border-color:var(--verde)}
+  .check.done .box svg{opacity:1}
+  .check .ct{font-size:.95rem;line-height:1.5}
+  .check.done .ct{color:#9a8f86;text-decoration:line-through}
+  .check .ct b{color:var(--vinho-texto)}
+
+  /* ETIQUETAS */
+  .wpasso{display:grid;grid-template-columns:34px 1fr;gap:14px;padding:14px 0;border-top:1px solid var(--linha)}
+  .wpasso:first-of-type{border-top:none}
+  .wpasso .pn{font-family:'Fraunces',serif;font-style:italic;color:var(--marinho);font-size:1.6rem;line-height:1}
+  .wpasso .pt{font-size:.96rem;line-height:1.55}
+  .wpasso .pt b{color:var(--vinho-texto)}
+  .etiquetas{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+  .etq{font-size:.86rem;border-radius:30px;padding:6px 14px;border:1px solid;font-weight:500}
+  .etq.e1{background:#FBEDE8;border-color:#e0a894;color:#8a2d12}
+  .etq.e2{background:#FBF4EE;border-color:#e3cdb2;color:#7E4C22}
+  .etq.e3{background:#F3EEF6;border-color:#cdb8da;color:#5a2e6e}
+  .etq.e4{background:#EEF3EF;border-color:#b8d0c3;color:#2E5E4E}
+  .etq.e5{background:#EAF0F6;border-color:#b3c6dc;color:#15294D}
+  .etq.e6{background:#FAF7F2;border-color:#d9cdbb;color:#5a4e46}
+  .wpp-nota{background:#FBF4EE;border-left:3px solid var(--ouro);border-radius:0 8px 8px 0;padding:13px 16px;font-size:.92rem;color:#5a4e46;margin-top:16px;line-height:1.55}
+  .wpp-nota b{color:var(--vinho-texto)}
+
+  /* GRUPOS */
+  .grupos{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:8px}
+  .grupo{background:var(--branco);border:1px solid var(--linha);border-radius:10px;padding:14px}
+  .grupo .quente{display:inline-block;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:var(--ouro);border-radius:20px;padding:2px 9px;margin-bottom:6px}
+  .grupo .gt{font-family:'Fraunces',serif;font-weight:600;color:var(--vinho-texto);font-size:1rem;margin-bottom:4px}
+  .grupo .gd{font-size:.85rem;color:#5a4e46;line-height:1.45}
+
+  /* FECHO */
+  .fecho{background:var(--creme2);text-align:center;border-bottom:none}
+  .fecho .frase{font-family:'Fraunces',serif;font-style:italic;color:var(--vinho);font-size:1.4rem;margin-bottom:10px}
+  .fecho .dep{font-family:'Fraunces',serif;font-weight:600;color:var(--vinho-texto);font-size:1rem}
+
+  @media (max-width:540px){
+    .ritmo,.metas,.grupos{grid-template-columns:1fr}
+    .janela{flex-direction:column;align-items:flex-start}
+  }
+</style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="wrap">
+      <div class="eyebrow">Unica Beauty · Rotina Comercial</div>
+      <h1>A Régua dos 7 Toques <span class="peach">🍑</span></h1>
+      <div class="sub">como conduzir um lead do primeiro oi até o sim, com leveza</div>
+      <div class="para">preparado com carinho para a Dra. Evelin</div>
+    </div>
+  </header>
+
+  <section>
+    <div class="wrap">
+      <div class="janela">
+        <div>
+          <div class="jt">Campanha Pré-Black estendida</div>
+          <div class="jd">a ação roda com mais fôlego, pra você construir a base com calma e colher até a Black.</div>
+        </div>
+        <div class="jbig">26 out → 30 nov</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="eyebrow">Por que 7, e não 1</div>
+      <h2 class="titulo">A repetição com cuidado é que vende.</h2>
+      <p class="lead">Quase ninguém decide na primeira mensagem. A pessoa está ocupada, ou o desejo dela ainda está adormecido. Cada toque planta de novo a mesma semente, e é o carinho repetido que transforma a estranha em conhecida, a conhecida em confiante, e a confiante em cliente.</p>
+      <p class="lead">A regra de ouro: repetir não é insistir igual. Cada toque conversa com um momento diferente do coração dela. Troque o <strong>[Nome]</strong> e o <strong>[procedimento]</strong>, e siga a régua. É só tocar em copiar.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="eyebrow">A régua, toque a toque</div>
+
+      <div class="toque">
+        <div class="n">1</div>
+        <div>
+          <div class="tt">A novidade</div>
+          <div class="quando">dia 1 · abre a porta com um presente, não com uma venda</div>
+          <div class="mood">Ela precisa sentir que você lembrou dela, não que você quer vender.</div>
+          <div class="msg">[Nome], tive uma novidade hoje aqui na Unica Beauty e lembrei de você 🤍 Agora dá pra realizar o seu [procedimento] dividindo leve no boleto, sem depender do limite do cartão. Te conto mais?</div>
+          <button class="copiar">Copiar</button>
+        </div>
+      </div>
+
+      <div class="toque">
+        <div class="n">2</div>
+        <div>
+          <div class="tt">O valor</div>
+          <div class="quando">dia 3 · mostra o resultado e acende o desejo</div>
+          <div class="mood">Aqui ela volta a querer. Capriche no encantamento, mande foto de antes e depois.</div>
+          <div class="msg">[Nome], olha que lindo esse resultado de [procedimento] 😍 É exatamente esse frescor e essa autoestima que eu quero ver em você. Imagina se olhar no espelho e se sentir assim de novo.</div>
+          <button class="copiar">Copiar</button>
+        </div>
+      </div>
+
+      <div class="toque">
+        <div class="n">3</div>
+        <div>
+          <div class="tt">A prova</div>
+          <div class="quando">dia 6 · traz confiança com uma história real</div>
+          <div class="mood">"Deu certo pra ela, pode dar certo pra mim." A prova dissolve o medo.</div>
+          <div class="msg">[Nome], preciso te contar: uma cliente entrou essa semana pelo Consórcio Beauty e já começou o tratamento dela radiante. Ver isso acontecendo me fez pensar em você de novo 🤍</div>
+          <button class="copiar">Copiar</button>
+        </div>
+      </div>
+
+      <div class="toque">
+        <div class="n">4</div>
+        <div>
+          <div class="tt">O toque pessoal</div>
+          <div class="quando">dia 10 · só pra ela, aquece o vínculo</div>
+          <div class="mood">Mostra que você guardou o sonho dela. Aqui a relação fica íntima.</div>
+          <div class="msg">[Nome], você passou pela minha cabeça hoje 🤍 Lembrei que você queria muito cuidar do seu [procedimento], e eu ia adorar fazer parte dessa sua virada. Como você está, de verdade?</div>
+          <button class="copiar">Copiar</button>
+        </div>
+      </div>
+
+      <div class="toque">
+        <div class="n">5</div>
+        <div>
+          <div class="tt">A objeção dissolvida</div>
+          <div class="quando">dia 14 · tira o freio real, que quase sempre é o dinheiro</div>
+          <div class="mood">A hora do Consórcio Beauty brilhar, colocando o cartão de lado com elegância.</div>
+          <div class="msg">[Nome], sabe o que mais me deixa feliz no Consórcio Beauty? Ele tira o maior peso da frente. Você começa o seu [procedimento] agora e vai pagando leve no boleto, em parcelas que cabem no seu mês. O valor deixou de ser o impeditivo 🤍</div>
+          <button class="copiar">Copiar</button>
+        </div>
+      </div>
+
+      <div class="toque">
+        <div class="n">6</div>
+        <div>
+          <div class="tt">A oportunidade</div>
+          <div class="quando">dia 18 · dá uma data pra um desejo que já existe</div>
+          <div class="mood">Não é pressão, é movimento. A condição que acaba, a vaga que fecha.</div>
+          <div class="msg">[Nome], passando só pra te avisar com carinho: a condição especial do Consórcio Beauty vai até o fim de novembro. Eu adoraria garantir o seu lugar antes de fechar. Reservo pra você? ⏳✨</div>
+          <button class="copiar">Copiar</button>
+        </div>
+      </div>
+
+      <div class="toque">
+        <div class="n">7</div>
+        <div>
+          <div class="tt">A porta aberta</div>
+          <div class="quando">dia 24 · solta com elegância e planta a última semente</div>
+          <div class="mood">O toque mais bonito e o mais esquecido. Libertar também é cuidar.</div>
+          <div class="msg">[Nome], vou te deixar tranquila, sem nenhuma pressa 🤍 Só quero que você saiba que a porta da Unica Beauty vai estar sempre aberta pra você, no seu tempo. Quando o seu momento chegar, é só me chamar que eu cuido de tudo com todo o carinho.</div>
+          <button class="copiar">Copiar</button>
+        </div>
+      </div>
+
+      <div class="quieto">
+        <div class="eyebrow">Depois do sétimo toque</div>
+        <h3>Deixar o lead quietinho é respeito, não desistência.</h3>
+        <p>Quem não fechou em 7 toques não está dizendo não pra sempre. Está dizendo <b>agora não</b>. Se você continua martelando, vira a marca que dá vontade de bloquear, e aí você queima a cliente de vez.</p>
+        <p>Então ela sai da prospecção ativa e entra na <b>nutrição passiva</b>: os stories, os conteúdos, a sua presença leve que mantém você viva na memória dela. Quando o momento dela chegar, e ele chega, ela volta sozinha.</p>
+        <div class="ritmo">
+          <div class="rbloco"><div class="rt">Respire o ritmo</div><div class="rd">os 7 toques acontecem ao longo de 3 a 4 semanas, não em 7 dias</div></div>
+          <div class="rbloco"><div class="rt">Espace com calma</div><div class="rd">quanto mais ela demora a responder, mais você afrouxa entre um toque e outro</div></div>
+          <div class="rbloco"><div class="rt">Responde no meio</div><div class="rd">se ela interagir em qualquer toque, pule a régua e chame pra avaliação</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- METAS -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow">Os seus números do comercial</div>
+      <h2 class="titulo">As metas que guiam cada dia.</h2>
+      <p class="lead">Metas grandes assustam. Metas pequenas acontecem. Olhe sempre a do dia, que o resto vai se somando sozinho. Conta feita com ticket médio de R$2.500.</p>
+      <div class="metas">
+        <div class="meta dia"><div class="ml">Cada dia comercial</div><div class="mv">10 abordagens</div><div class="mp">e 2 avaliações agendadas</div></div>
+        <div class="meta sem"><div class="ml">Cada semana</div><div class="mv">3 pacientes</div><div class="mp">fechadas no consórcio, cerca de R$7.500</div></div>
+        <div class="meta camp"><div class="ml">Até 30 de novembro</div><div class="mv">12 pacientes</div><div class="mp">cerca de R$30.000 fechados</div></div>
+      </div>
+      <p class="meta-nota">São 5 semanas de campanha. Três fechamentos por semana e você passa da meta cheia com folga.</p>
+    </div>
+  </section>
+
+  <!-- CHECKLIST -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow">A sua lista de check do dia</div>
+      <h2 class="titulo">Vá marcando, e sinta a vitória.</h2>
+      <p class="lead">Terminar a lista é a vitória do dia, independente de quantas responderam. Toque em cada item pra marcar.</p>
+
+      <div class="bloco-dia">De manhã · a hora de plantar</div>
+      <div class="check"><div class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M1 6l3.5 3.5L11 2" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="ct">Abri o WhatsApp Business e olhei minhas <b>etiquetas</b> de prospecção.</div></div>
+      <div class="check"><div class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M1 6l3.5 3.5L11 2" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="ct">Separei <b>10 nomes</b>, começando pelas que travaram no cartão.</div></div>
+      <div class="check"><div class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M1 6l3.5 3.5L11 2" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="ct">Vi em <b>qual toque</b> cada uma está e disparei o toque certo, com nome e procedimento.</div></div>
+
+      <div class="bloco-dia">De tarde · a hora de colher</div>
+      <div class="check"><div class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M1 6l3.5 3.5L11 2" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="ct">Respondi todo mundo que interagiu e <b>chamei pra avaliação</b> quem demonstrou interesse.</div></div>
+      <div class="check"><div class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M1 6l3.5 3.5L11 2" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="ct">Movi na etiqueta quem <b>avançou de toque</b> ou marcou avaliação.</div></div>
+      <div class="check"><div class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M1 6l3.5 3.5L11 2" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="ct">Movi pra <b>nutrição</b> quem chegou no toque 7 sem fechar.</div></div>
+      <div class="check"><div class="box"><svg viewBox="0 0 12 12" fill="none"><path d="M1 6l3.5 3.5L11 2" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="ct">Anotei os <b>fechamentos de hoje</b> e olhei minha meta da semana subindo 🤍</div></div>
+    </div>
+  </section>
+
+  <!-- ETIQUETAS -->
+  <section>
+    <div class="wrap">
+      <div class="eyebrow">Montando as listas sem se perder</div>
+      <h2 class="titulo">As etiquetas do WhatsApp Business.</h2>
+      <p class="lead">O segredo pra nunca mais esquecer quem você já abordou é usar as etiquetas, aquelas marcações coloridas do próprio WhatsApp Business. Cada conversa recebe uma cor, e você enxerga tudo num olhar.</p>
+
+      <div class="wpasso"><div class="pn">1</div><div class="pt">Confirme que você usa o <b>WhatsApp Business</b>, não o comum. Se ainda não tem, baixe na loja do celular e transfira seu número, é grátis.</div></div>
+      <div class="wpasso"><div class="pn">2</div><div class="pt">Toque nos <b>três pontinhos</b> no topo e entre em <b>Ferramentas comerciais</b>, depois em <b>Etiquetas</b>. É ali que você cria as suas listas.</div></div>
+      <div class="wpasso"><div class="pn">3</div><div class="pt">Crie estas etiquetas, que são as suas listas de prospecção:</div></div>
+
+      <div class="etiquetas">
+        <span class="etq e1">🔥 Travou no cartão</span>
+        <span class="etq e2">💬 Orçamento parado</span>
+        <span class="etq e3">💜 Cliente sumida</span>
+        <span class="etq e4">✅ Avaliação marcada</span>
+        <span class="etq e5">💎 Fechou</span>
+        <span class="etq e6">🌙 Nutrição</span>
+      </div>
+
+      <div class="wpasso"><div class="pn">4</div><div class="pt">Abra a conversa de cada contato, toque no <b>nome dela no topo</b>, desça até <b>Etiqueta</b> e marque o grupo dela. Pronto, ela entrou na lista certa.</div></div>
+      <div class="wpasso"><div class="pn">5</div><div class="pt">Pra trabalhar, toque na etiqueta e o WhatsApp mostra <b>só as pessoas daquela lista</b>. É daí que você tira os 10 nomes do dia.</div></div>
+      <div class="wpasso"><div class="pn">6</div><div class="pt">Conforme a pessoa avança, <b>troque a etiqueta</b> dela. Marcou avaliação, vai pra "Avaliação marcada". Fechou, vira "Fechou". Chegou no toque 7 sem responder, vai pra "Nutrição".</div></div>
+
+      <div class="wpp-nota">Dica de ouro: anote no <b>nome do contato</b> em que toque ela está, tipo "Maria T3". Assim, ao abrir a conversa, você já sabe de onde continuar sem reler tudo. É isso que faz você nunca repetir a mesma abordagem nem esquecer ninguém.</div>
+    </div>
+  </section>
+
+  <!-- FECHO -->
+  <section class="fecho">
+    <div class="wrap">
+      <div class="frase">Uma conversa por vez, com carinho e firmeza, a meta acontece.</div>
+      <div class="dep">Unica Beauty · com o método All Win Academy</div>
+    </div>
+  </section>
+
+<script>
+  // copiar mensagens
+  document.querySelectorAll('.toque').forEach(function(card){
+    var btn = card.querySelector('.copiar');
+    var corpo = card.querySelector('.msg');
+    if(!btn) return;
+    btn.addEventListener('click', function(){
+      var txt = corpo.innerText;
+      try {
+        navigator.clipboard.writeText(txt).then(function(){ flash(btn); }, function(){ fb(txt, btn); });
+      } catch(e){ fb(txt, btn); }
+    });
+  });
+  function flash(btn){ var o=btn.textContent; btn.textContent='Copiado ✓'; btn.classList.add('ok');
+    setTimeout(function(){ btn.textContent=o; btn.classList.remove('ok'); },1600); }
+  function fb(txt, btn){ try{ var ta=document.createElement('textarea'); ta.value=txt;
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); flash(btn);}catch(e){} }
+
+  // check list
+  document.querySelectorAll('.check').forEach(function(c){
+    c.addEventListener('click', function(){ c.classList.toggle('done'); });
+  });
+</script>
+</body>
+</html>
