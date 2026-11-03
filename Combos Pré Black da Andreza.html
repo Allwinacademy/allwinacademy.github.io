@@ -1,0 +1,222 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Combos Pré Black da Andreza</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Pinyon+Script&family=DM+Sans:wght@400;500;700&display=swap">
+<style>
+/* Layout: mesa de trabalho. À esquerda os combos editáveis, à direita o painel que traduz os números nas metas dela */
+:root{
+  --creme:#FAF7F2; --branco:#FFFFFF; --vinho:#360000; --vinho-txt:#4E0D16;
+  --ouro:#C9A15A; --marinho:#15294D; --madeira:#7E4C22; --tinta:#1F1A18;
+  --linha:#E6DCCD; --suave:#6B5A4E; --verde:#2F6B4F;
+  --display:"Playfair Display",Georgia,"Times New Roman",serif;
+  --script:"Pinyon Script","Brush Script MT",cursive;
+  --body:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:light;
+}
+html,body{background:var(--creme);color:var(--tinta)}
+body{font-family:var(--body);font-size:15px;line-height:1.55;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:36px 64px}
+.wrap{max-width:1120px;margin:0 auto;display:flex;flex-direction:column;gap:32px}
+header{display:flex;flex-direction:column;gap:6px}
+.kicker{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--marinho);font-weight:700}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(30px,5vw,50px);line-height:1.05;color:var(--vinho);margin:0;text-transform:uppercase}
+h1 .sc{font-family:var(--script);text-transform:none;font-weight:400;color:var(--marinho);font-size:1.1em}
+.lead{max-width:640px;color:var(--suave);margin:6px 0 0}
+.aviso{font-size:13px;color:var(--madeira);background:#F3EADC;border-radius:8px;padding:8px 12px;align-self:flex-start}
+
+.mesa{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px;align-items:start}
+.combos{display:flex;flex-direction:column;gap:16px}
+.combo{background:var(--branco);border:1px solid var(--linha);border-radius:14px;padding:18px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.combo .full{grid-column:1/-1}
+.combo .meio{grid-column:span 2}
+label{display:flex;flex-direction:column;gap:4px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--suave);font-weight:700;min-width:0}
+input,textarea{font:inherit;font-size:15px;letter-spacing:0;text-transform:none;color:var(--tinta);background:var(--creme);border:1px solid var(--linha);border-radius:8px;padding:9px 11px;width:100%;box-sizing:border-box;font-weight:400}
+textarea{resize:vertical;min-height:52px}
+input.nome{font-family:var(--display);font-size:19px;font-weight:700;color:var(--vinho-txt);background:transparent;border-color:transparent;padding-left:0}
+input.nome:hover{border-color:var(--linha)}
+input:focus,textarea:focus,button:focus-visible{outline:2px solid var(--marinho);outline-offset:1px}
+.res{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;border-top:1px solid var(--linha);padding-top:10px;font-size:14px;color:var(--suave)}
+.res b{color:var(--tinta);font-variant-numeric:tabular-nums}
+.acoes{margin-left:auto;display:flex;gap:8px}
+button{font:inherit;font-size:13px;font-weight:700;border-radius:999px;padding:8px 14px;cursor:pointer;border:1px solid var(--linha);background:var(--branco);color:var(--vinho-txt)}
+button.prim{background:var(--vinho);border-color:var(--vinho);color:var(--creme)}
+button.leve{border:none;background:none;color:var(--suave);padding:8px 6px;font-weight:500}
+button:hover{filter:brightness(.96)}
+
+.painel{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);display:flex;flex-direction:column;gap:16px}
+.bloco{background:var(--marinho);color:var(--creme);border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:14px}
+.bloco .lbl{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ouro);font-weight:700}
+.big{font-family:var(--display);font-size:34px;font-weight:700;line-height:1.05;font-variant-numeric:tabular-nums}
+.linha2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.linha2 .v{font-family:var(--display);font-size:22px;font-weight:700;color:var(--ouro);font-variant-numeric:tabular-nums}
+.linha2 .d{font-size:13px;opacity:.85}
+.barra{height:10px;background:rgba(250,247,242,.18);border-radius:99px;overflow:hidden}
+.barra i{display:block;height:100%;background:var(--ouro);border-radius:99px;transition:width .3s}
+.ritmo{font-size:13px;opacity:.9}
+.metas{background:var(--branco);border:1px solid var(--linha);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:10px}
+.metas h2{font-family:var(--display);font-size:20px;color:var(--vinho);margin:0}
+.metas p.ex{margin:0 0 4px;font-size:13px;color:var(--suave)}
+.meta{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;padding:8px 0;border-top:1px solid var(--linha);font-size:14px}
+.meta span:last-child{font-weight:700;color:var(--marinho);font-variant-numeric:tabular-nums;text-align:right}
+.meta small{grid-column:1/-1;color:var(--suave);font-size:12px}
+
+.textos{display:flex;flex-direction:column;gap:14px}
+.textos h2{font-family:var(--display);font-size:clamp(22px,3vw,28px);color:var(--vinho);margin:0}
+.textos .intro{color:var(--suave);margin:0}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px}
+.tx{background:var(--branco);border:1px solid var(--linha);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.tx h3{margin:0;font-family:var(--display);font-size:18px;color:var(--vinho-txt)}
+.tx p{margin:0;font-size:14px;white-space:pre-line}
+.tx button{align-self:flex-start}
+.assin{text-align:center;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--ouro);font-weight:700;padding-top:20px;border-top:1px solid var(--linha)}
+
+@media (max-width:860px){
+  .mesa{grid-template-columns:1fr}
+  .painel{position:static}
+  .combo{grid-template-columns:1fr 1fr}
+  .combo .meio{grid-column:1/-1}
+}
+@media (prefers-reduced-motion:reduce){.barra i{transition:none}}
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="kicker">Business Core · Andreza Clemente</span>
+    <h1>Combos pré black <span class="sc">e propostas</span></h1>
+    <p class="lead">Digite o valor, a margem e quantas vendas por mês você quer de cada combo. O painel mostra na hora quanto isso fatura, quanto sobra e quando cada meta se realiza.</p>
+    <span class="aviso">Os valores já preenchidos são exemplos para começarmos juntas. Troque pelos seus.</span>
+  </header>
+
+  <div class="mesa">
+    <div>
+      <div class="combos" id="lista"></div>
+      <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
+        <button class="prim" id="add">Adicionar combo</button>
+        <button class="leve" id="reset">Voltar aos exemplos</button>
+      </div>
+    </div>
+
+    <aside class="painel">
+      <div class="bloco">
+        <span class="lbl">Faturamento do mês</span>
+        <span class="big" id="fat">R$ 0</span>
+        <div class="linha2">
+          <div><div class="v" id="luc">R$ 0</div><div class="d">lucro do mês</div></div>
+          <div><div class="v" id="ano">R$ 0</div><div class="d">faturamento em 12 meses</div></div>
+        </div>
+        <div class="barra" aria-hidden="true"><i id="bar" style="width:0"></i></div>
+        <span class="ritmo" id="ritmo"></span>
+      </div>
+      <div class="metas">
+        <h2>Quando cada meta chega</h2>
+        <p class="ex">Usando o lucro do mês, na ordem que combinamos.</p>
+        <div id="metas"></div>
+      </div>
+    </aside>
+  </div>
+
+  <section class="textos">
+    <h2>Textos de posicionamento</h2>
+    <p class="intro">Uma proposta pronta para cada combo, para usar no direct, no WhatsApp ou nos stories. Ajuste com a sua voz.</p>
+    <div class="cards" id="textos"></div>
+  </section>
+
+  <div class="assin">All Win Academy · Maria Clara</div>
+</div>
+
+<script>
+(function(){
+  var META_MES=1000000/12;
+  var METAS=[["Quitar todas as dívidas",50000],["Construir a clínica",130000],["Viagens com a família",40000],["Cirurgia plástica",100000],["Haval H6 cinza Amazonita",250000]];
+  var EXEMPLO=[
+    {nome:"Pele Pronta",inclui:"Limpeza de pele profunda + peeling de preparação",valor:450,margem:70,qtd:20,beneficio:"pele limpa, uniforme e pronta para receber qualquer tratamento"},
+    {nome:"Rosto Descansado",inclui:"Botox full face com retorno de avaliação",valor:1800,margem:55,qtd:6,beneficio:"expressão leve e descansada, sem perder a naturalidade"},
+    {nome:"Verão Firme",inclui:"Bioestimulador de colágeno + peeling de preparação",valor:4500,margem:50,qtd:4,beneficio:"pele firme e viçosa chegando no verão, com o colágeno em ação total em 3 meses"},
+    {nome:"Full Face Assinatura",inclui:"Harmonização full face + bioestimulador + peeling",valor:12000,margem:50,qtd:2,beneficio:"o rosto inteiro em harmonia, com resultado completo e cuidado do começo ao fim"}
+  ];
+  var KEY="andreza-combos-v1",combos;
+  try{combos=JSON.parse(localStorage.getItem(KEY))}catch(e){}
+  if(!Array.isArray(combos)||!combos.length)combos=JSON.parse(JSON.stringify(EXEMPLO));
+  var brl=new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0});
+  var lista=document.getElementById('lista');
+  function num(v){v=parseFloat(String(v).replace(/\./g,'').replace(',','.'));return isFinite(v)?v:0}
+  function salvar(){try{localStorage.setItem(KEY,JSON.stringify(combos))}catch(e){}}
+
+  function render(){
+    lista.innerHTML='';
+    combos.forEach(function(c,i){
+      var d=document.createElement('div');d.className='combo';
+      d.innerHTML=
+        '<label class="full">Nome do combo<input class="nome" id="nome-'+i+'" data-k="nome" value=""></label>'+
+        '<label class="full">O que inclui<textarea id="inclui-'+i+'" data-k="inclui"></textarea></label>'+
+        '<label class="full">Principal resultado para a paciente<input id="beneficio-'+i+'" data-k="beneficio"></label>'+
+        '<label>Valor (R$)<input id="valor-'+i+'" data-k="valor" inputmode="decimal"></label>'+
+        '<label>Margem (%)<input id="margem-'+i+'" data-k="margem" inputmode="decimal"></label>'+
+        '<label class="meio">Vendas por mês<input id="qtd-'+i+'" data-k="qtd" inputmode="numeric"></label>'+
+        '<div class="res"><span>Fatura <b data-o="f"></b></span><span>Sobra <b data-o="l"></b></span>'+
+        '<div class="acoes"><button class="leve" data-rm>Remover</button></div></div>';
+      d.querySelectorAll('[data-k]').forEach(function(el){
+        el.value=c[el.dataset.k]==null?'':c[el.dataset.k];
+        el.addEventListener('input',function(){
+          var k=el.dataset.k;c[k]=(k==='valor'||k==='margem'||k==='qtd')?num(el.value):el.value;
+          calc();salvar();
+        });
+      });
+      d.querySelector('[data-rm]').addEventListener('click',function(){combos.splice(i,1);salvar();render()});
+      lista.appendChild(d);
+    });
+    calc();
+  }
+
+  function calc(){
+    var fat=0,luc=0,cards=document.getElementById('textos');cards.innerHTML='';
+    lista.querySelectorAll('.combo').forEach(function(d,i){
+      var c=combos[i],f=num(c.valor)*num(c.qtd),l=f*num(c.margem)/100;
+      fat+=f;luc+=l;
+      d.querySelector('[data-o=f]').textContent=brl.format(f);
+      d.querySelector('[data-o=l]').textContent=brl.format(l);
+      var txt=texto(c),t=document.createElement('div');t.className='tx';
+      t.innerHTML='<h3></h3><p></p><button>Copiar texto</button>';
+      t.querySelector('h3').textContent=c.nome||'Combo sem nome';
+      t.querySelector('p').textContent=txt;
+      var b=t.querySelector('button');
+      b.addEventListener('click',function(){
+        var ok=function(){b.textContent='Copiado';setTimeout(function(){b.textContent='Copiar texto'},1600)};
+        var sel=function(){var r=document.createRange();r.selectNodeContents(t.querySelector('p'));var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Texto selecionado'};
+        try{navigator.clipboard.writeText(txt).then(ok,sel)}catch(e){sel()}
+      });
+      cards.appendChild(t);
+    });
+    document.getElementById('fat').textContent=brl.format(fat);
+    document.getElementById('luc').textContent=brl.format(luc);
+    document.getElementById('ano').textContent=brl.format(fat*12);
+    var p=Math.min(100,fat/META_MES*100);
+    document.getElementById('bar').style.width=p+'%';
+    document.getElementById('ritmo').textContent=fat>=META_MES?'Ritmo do milhão alcançado. Que orgulho!':Math.round(fat/META_MES*100)+'% do ritmo do milhão (R$ 83,3 mil por mês). Faltam '+brl.format(META_MES-fat)+' por mês.';
+    var m=document.getElementById('metas');m.innerHTML='';var acum=0;
+    METAS.forEach(function(g){
+      acum+=g[1];var r=document.createElement('div');r.className='meta';
+      var meses=luc>0?Math.ceil(acum/luc):null;
+      r.innerHTML='<span></span><span></span><small></small>';
+      r.children[0].textContent=g[0];
+      r.children[1].textContent=meses?(meses+(meses===1?' mês':' meses')):'sem lucro ainda';
+      r.children[2].textContent=brl.format(g[1])+' · total acumulado '+brl.format(acum);
+      m.appendChild(r);
+    });
+  }
+
+  function texto(c){
+    var nome=c.nome||'este combo',inc=c.inclui||'',ben=c.beneficio||'um resultado lindo e seguro';
+    return 'Preparei o '+nome+' pensando em você que quer '+ben+'.\n\n'+
+      (inc?'Ele reúne '+inc.charAt(0).toLowerCase()+inc.slice(1)+', tudo planejado para o seu rosto e no tempo certo.\n\n':'')+
+      'No pré black o investimento fica em '+brl.format(num(c.valor))+', com vagas limitadas para eu cuidar de cada paciente com a atenção que ela merece.\n\n'+
+      'Quer garantir o seu horário? Me chama aqui que eu te explico cada detalhe.';
+  }
+
+  document.getElementById('add').addEventListener('click',function(){combos.push({nome:"Novo combo",inclui:"",beneficio:"",valor:0,margem:50,qtd:1});salvar();render()});
+  document.getElementById('reset').addEventListener('click',function(){combos=JSON.parse(JSON.stringify(EXEMPLO));salvar();render()});
+  render();
+})();
+</script>
+
+</body></html>

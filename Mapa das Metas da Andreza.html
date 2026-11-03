@@ -1,0 +1,188 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Mapa das Metas da Andreza</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Pinyon+Script&family=DM+Sans:wght@400;500;700&display=swap">
+<style>
+/* Layout: um coração central (o faturamento) irrigando cinco metas em ordem de conquista, como raízes de uma mesma árvore */
+:root{
+  --creme:#FAF7F2; --branco:#FFFFFF; --vinho:#360000; --vinho-txt:#4E0D16;
+  --ouro:#C9A15A; --marinho:#15294D; --madeira:#7E4C22; --espresso:#3E2513; --tinta:#1F1A18;
+  --linha:#E6DCCD; --suave:#6B5A4E;
+  --display:"Playfair Display",Georgia,"Times New Roman",serif;
+  --script:"Pinyon Script","Brush Script MT",cursive;
+  --body:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:light;
+}
+html,body{background:var(--creme);color:var(--tinta)}
+body{font-family:var(--body);font-size:16px;line-height:1.6;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:40px 64px}
+.wrap{max-width:1040px;margin:0 auto;display:flex;flex-direction:column;gap:48px}
+header{text-align:center;display:flex;flex-direction:column;gap:6px;align-items:center}
+.kicker{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--marinho);font-weight:700}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,6vw,58px);line-height:1.05;color:var(--vinho);margin:0;text-transform:uppercase;text-wrap:balance}
+h1 .sc{font-family:var(--script);text-transform:none;font-weight:400;color:var(--marinho);font-size:1.15em;display:block;margin-top:-6px}
+.lead{max-width:600px;color:var(--suave);margin:8px 0 0;text-wrap:pretty}
+
+/* mapa */
+.mapa{position:relative;display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:auto auto auto;gap:28px 24px;align-items:center}
+.mapa svg.fios{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.no{position:relative;z-index:1;background:var(--branco);border:1px solid var(--linha);border-radius:14px;padding:18px 18px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.ordem{font-family:var(--display);font-style:italic;color:var(--ouro);font-size:15px}
+.no h3{margin:0;font-family:var(--display);font-size:20px;line-height:1.2;color:var(--vinho-txt)}
+.valor{font-weight:700;font-size:18px;color:var(--tinta);font-variant-numeric:tabular-nums}
+.ff{font-size:13px;color:var(--marinho);font-weight:500}
+.porque{font-size:14px;color:var(--suave);margin:4px 0 0}
+.centro{grid-column:2;grid-row:2;background:var(--vinho);color:var(--creme);border:none;border-radius:50%;aspect-ratio:1;max-width:300px;width:100%;justify-self:center;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:28px;gap:4px}
+.centro .lbl{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--ouro);font-weight:700}
+.centro .grande{font-family:var(--display);font-weight:700;font-size:clamp(28px,4vw,38px);line-height:1.05}
+.centro .sub{font-size:14px;opacity:.9}
+.centro .sc{font-family:var(--script);font-size:30px;color:var(--ouro);line-height:1}
+.n1{grid-column:1;grid-row:1}.n2{grid-column:3;grid-row:1}.n3{grid-column:1;grid-row:3}.n4{grid-column:3;grid-row:3}
+.n5{grid-column:2;grid-row:1;align-self:end}
+.n1{border-top:3px solid var(--marinho)}
+.coroa{border:1.5px solid var(--ouro);background:#FFFDF8}
+
+/* trilha */
+section h2{font-family:var(--display);font-size:clamp(24px,3.4vw,32px);color:var(--vinho);margin:0 0 6px;text-wrap:balance}
+section .intro{color:var(--suave);margin:0 0 20px;max-width:640px}
+.trilha{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border-top:1px solid var(--linha)}
+.passo{padding:18px 14px 6px;border-right:1px solid var(--linha);display:flex;flex-direction:column;gap:6px;min-width:0}
+.passo:last-child{border-right:none}
+.passo .t{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--madeira);font-weight:700}
+.passo b{font-family:var(--display);font-size:18px;color:var(--vinho-txt);font-weight:700}
+.passo p{margin:0;font-size:14px;color:var(--suave)}
+
+/* números */
+.conta{background:var(--marinho);color:var(--creme);border-radius:16px;padding:28px clamp(18px,4vw,40px);display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.conta div{display:flex;flex-direction:column;gap:4px}
+.conta .n{font-family:var(--display);font-size:clamp(28px,4vw,40px);font-weight:700;color:var(--ouro);font-variant-numeric:tabular-nums;line-height:1.1}
+.conta .d{font-size:14px;opacity:.88}
+.nota{font-size:14px;color:var(--suave);max-width:680px;margin:14px 0 0}
+
+/* fecho */
+.fecho{text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center;padding:32px 0 0;border-top:1px solid var(--linha)}
+.fecho p{font-family:var(--display);font-style:italic;font-size:clamp(20px,3vw,26px);color:var(--vinho-txt);max-width:720px;margin:0;line-height:1.4;text-wrap:balance}
+.fecho p strong{font-style:normal;color:var(--vinho)}
+.assin{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--ouro);font-weight:700}
+
+@media (max-width:820px){
+  .mapa{grid-template-columns:1fr;gap:14px}
+  .mapa svg.fios{display:none}
+  .centro{grid-column:1;grid-row:auto;order:-1;max-width:260px;margin-bottom:10px}
+  .n1,.n2,.n3,.n4,.n5{grid-column:1;grid-row:auto}
+  .n1{order:1}.n2{order:2}.n3{order:3}.n4{order:4}.n5{order:5}
+  .trilha{grid-template-columns:1fr}
+  .passo{border-right:none;border-bottom:1px solid var(--linha);padding:14px 0}
+  .conta{grid-template-columns:1fr}
+}
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="kicker">Business Core · Andreza Clemente</span>
+    <h1>Minhas metas <span class="sc">caminham juntas</span></h1>
+    <p class="lead">Cada sonho seu tem um valor, e todos bebem da mesma fonte: o seu faturamento. Quando você entende como eles se conectam, cada atendimento ganha um propósito.</p>
+  </header>
+
+  <div class="mapa" id="mapa">
+    <svg class="fios" id="fios" aria-hidden="true"></svg>
+
+    <div class="no centro" id="c">
+      <span class="lbl">A fonte de tudo</span>
+      <span class="grande">R$ 1 milhão</span>
+      <span class="sub">de faturamento no ano</span>
+      <span class="sc">7 full faces</span>
+      <span class="sub">por mês</span>
+    </div>
+
+    <div class="no n1" data-no>
+      <span class="ordem">Primeira conquista</span>
+      <h3>Quitar todas as dívidas</h3>
+      <span class="valor">R$ 50.000</span>
+      <span class="ff">cerca de 4 full faces</span>
+      <p class="porque">Tira o peso das costas e libera o caixa para tudo que vem depois.</p>
+    </div>
+
+    <div class="no n5" data-no>
+      <span class="ordem">Segunda conquista</span>
+      <h3>Construir a minha clínica</h3>
+      <span class="valor">R$ 130.000</span>
+      <span class="ff">cerca de 11 full faces</span>
+      <p class="porque">O espaço que multiplica atendimentos e dá casa para a sua excelência.</p>
+    </div>
+
+    <div class="no n2" data-no>
+      <span class="ordem">Terceira conquista</span>
+      <h3>Viajar 2x por ano com a família</h3>
+      <span class="valor">R$ 40.000</span>
+      <span class="ff">cerca de 3 full faces</span>
+      <p class="porque">Uma viagem pelo Brasil e uma no exterior. Descanso que renova a criatividade.</p>
+    </div>
+
+    <div class="no n3" data-no>
+      <span class="ordem">Quarta conquista</span>
+      <h3>Minha cirurgia plástica</h3>
+      <span class="valor">R$ 100.000</span>
+      <span class="ff">cerca de 8 full faces</span>
+      <p class="porque">Mamas com prótese e lipo HD. O cuidado que você entrega, voltando para você.</p>
+    </div>
+
+    <div class="no n4 coroa" data-no>
+      <span class="ordem">A coroa do ano</span>
+      <h3>Haval H6 HEV2 Flex 2027</h3>
+      <span class="valor">R$ 250.000</span>
+      <span class="ff">cerca de 21 full faces</span>
+      <p class="porque">Cinza Amazonita, bancos de couro claro e teto solar. A celebração de tudo que você construiu.</p>
+    </div>
+  </div>
+
+  <section>
+    <h2>Por que nessa ordem</h2>
+    <p class="intro">Uma meta abre a porta da próxima. Essa sequência protege o seu caixa e faz cada conquista alimentar a seguinte.</p>
+    <div class="trilha">
+      <div class="passo"><span class="t">Liberdade</span><b>Dívidas zeradas</b><p>Sem juros comendo o lucro, todo full face passa a trabalhar para você.</p></div>
+      <div class="passo"><span class="t">Estrutura</span><b>A clínica</b><p>Mais salas e mais agenda significam mais faturamento todo mês.</p></div>
+      <div class="passo"><span class="t">Recompensa</span><b>As viagens</b><p>Família por perto e mente descansada para crescer mais.</p></div>
+      <div class="passo"><span class="t">Autocuidado</span><b>A cirurgia</b><p>Você sendo a prova viva do cuidado que oferece.</p></div>
+      <div class="passo"><span class="t">Celebração</span><b>O carro</b><p>Chega com o caixa saudável, como presente e nunca como peso.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>A conta que une tudo</h2>
+    <div class="conta">
+      <div><span class="n">R$ 570 mil</span><span class="d">é a soma das cinco conquistas</span></div>
+      <div><span class="n">R$ 83,3 mil</span><span class="d">por mês é o ritmo do seu milhão</span></div>
+      <div><span class="n">7 por mês</span><span class="d">full faces de R$ 12 mil sustentam esse ritmo</span></div>
+    </div>
+    <p class="nota">As metas saem do <strong>lucro</strong>, ou seja, do que sobra depois de produtos, impostos e custos da clínica. Por isso o milhão de faturamento existe: ele dá folga para realizar tudo isso com tranquilidade. Combos com margem alta, como limpeza de pele e peeling, ajudam a encher a agenda entre um full face e outro.</p>
+  </section>
+
+  <div class="fecho">
+    <p>Cada full face que você fecha é <strong>um tijolo da sua clínica</strong>, um quilômetro do seu carro novo e uma passagem para o mundo. Você já colocou o primeiro.</p>
+    <span class="assin">All Win Academy · Maria Clara</span>
+  </div>
+</div>
+
+<script>
+(function(){
+  var mapa=document.getElementById('mapa'),svg=document.getElementById('fios'),c=document.getElementById('c');
+  function draw(){
+    if(getComputedStyle(svg).display==='none'){svg.innerHTML='';return}
+    var r=mapa.getBoundingClientRect(),cr=c.getBoundingClientRect();
+    var cx=cr.left+cr.width/2-r.left,cy=cr.top+cr.height/2-r.top,out='';
+    svg.setAttribute('viewBox','0 0 '+r.width+' '+r.height);
+    mapa.querySelectorAll('[data-no]').forEach(function(n){
+      var b=n.getBoundingClientRect(),x=b.left+b.width/2-r.left,y=b.top+b.height/2-r.top;
+      var mx=(cx+x)/2;
+      out+='<path d="M'+cx+' '+cy+' Q'+mx+' '+cy+' '+x+' '+y+'" fill="none" stroke="#C9A15A" stroke-width="1.5" stroke-dasharray="4 5" opacity=".85"/>';
+    });
+    svg.innerHTML=out;
+  }
+  window.addEventListener('resize',draw);
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(draw);
+  draw();
+})();
+</script>
+
+</body></html>
